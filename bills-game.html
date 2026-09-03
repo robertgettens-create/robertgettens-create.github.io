@@ -564,12 +564,13 @@ document.getElementById('instr').innerHTML = '';
 
 // start button
 const startDiv = document.createElement('div');
+startDiv.id = 'start-screen';
 startDiv.style.cssText = 'position:fixed;inset:0;z-index:40;display:flex;align-items:center;justify-content:center;background:rgba(0,10,40,0.88);';
 startDiv.innerHTML = `<div style="text-align:center;padding:2rem;max-width:380px">
   <div style="font-size:3rem;margin-bottom:0.75rem">🏈</div>
   <div style="font-size:1.6rem;font-weight:800;color:#FFB81C;text-transform:uppercase;letter-spacing:0.08em;margin-bottom:0.5rem">Mafia Goal</div>
   <div style="font-size:0.85rem;color:rgba(255,255,255,0.5);line-height:1.6;margin-bottom:1.5rem">5 field goal attempts.<br>Click once to set <strong style="color:#FFB81C">power</strong>, click again to set <strong style="color:#FFB81C">accuracy</strong>.<br>Split the uprights, Bills Mafia style.</div>
-  <button style="background:#FFB81C;color:#003087;border:none;font-family:inherit;font-weight:800;font-size:0.9rem;letter-spacing:0.1em;text-transform:uppercase;padding:0.8rem 2rem;border-radius:2px;cursor:pointer;" onclick="this.closest('div[style]').remove();startGame();">Let's Go →</button>
+  <button style="background:#FFB81C;color:#003087;border:none;font-family:inherit;font-weight:800;font-size:0.9rem;letter-spacing:0.1em;text-transform:uppercase;padding:0.8rem 2rem;border-radius:2px;cursor:pointer;" onclick="document.getElementById('start-screen').remove();startGame();">Let's Go →</button>
 </div>`;
 document.body.appendChild(startDiv);
 </script>
