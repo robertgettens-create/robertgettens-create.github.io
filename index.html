@@ -1,4 +1,4 @@
-﻿<title>ChangHoon Lee</title>
+<title>ChangHoon Lee</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Source+Sans+3:wght@300;400;600;700&display=swap">
 <style>
 
@@ -313,6 +313,54 @@ a:focus-visible { outline: 2px solid var(--navy); outline-offset: 2px; }
 .beyond-card.bills .beyond-card-title { color: #FFB81C; }
 .beyond-card-desc { font-size: 0.86rem; color: var(--text-muted); line-height: 1.5; }
 .beyond-card.bills .beyond-card-desc { color: rgba(255,255,255,0.7); }
+.beyond-divider {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin: 2rem 0 1rem;
+}
+.beyond-divider::before,
+.beyond-divider::after { content: ''; flex: 1; height: 1px; background: var(--border); }
+.beyond-divider span {
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--text-faint);
+  white-space: nowrap;
+}
+.play-btn {
+  display: inline-block;
+  margin-top: 0.65rem;
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: var(--navy);
+  text-decoration: none;
+  letter-spacing: 0.03em;
+}
+.play-btn:hover { text-decoration: underline; }
+.bills-play-btn { color: #FFB81C; }
+.course-spring {
+  font-size: 0.62rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 0.1rem;
+}
+.courses-spring {
+  margin-top: 1.5rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--border);
+}
+.semester-eyebrow {
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--text-faint);
+  margin-bottom: 1rem;
+}
 
 /* ── Contact ──────────────────────────────────────────────── */
 .contact-wrap {
@@ -503,6 +551,38 @@ a:focus-visible { outline: 2px solid var(--navy); outline-offset: 2px; }
         </p>
       </div>
     </div>
+    <div class="courses-spring">
+      <p class="semester-eyebrow">Spring Semester</p>
+      <div class="courses">
+        <div class="course">
+          <p class="course-code">ENGR 110</p>
+          <p class="course-title">Data Acquisition &amp; Processing</p>
+          <p class="course-desc">
+            Hands-on introduction to sensor systems, data loggers, and signal processing — the
+            instrumentation layer that sits between physical phenomena and the numbers engineers use.
+            Connects directly to Dr. Lee's work in concrete stiffening measurement.
+          </p>
+        </div>
+        <div class="course">
+          <p class="course-code">CEE 342</p>
+          <p class="course-title">Steel &amp; Reinforced Concrete Structures</p>
+          <p class="course-desc">
+            Design of structural members in steel and reinforced concrete, following AISC and ACI 318.
+            Covers beams, columns, connections, and composite systems — the practical extension of
+            structural analysis into real construction.
+          </p>
+        </div>
+        <div class="course">
+          <p class="course-code">CEE 451</p>
+          <p class="course-title">Construction Materials</p>
+          <p class="course-desc">
+            The properties, testing, and selection of materials used in construction: concrete,
+            steel, wood, asphalt, and composites. Dr. Lee's home territory — from mix design
+            to maturity prediction to durability assessment.
+          </p>
+        </div>
+      </div>
+    </div>
   </div>
 </section>
 
@@ -596,6 +676,21 @@ a:focus-visible { outline: 2px solid var(--navy); outline-offset: 2px; }
         <p class="beyond-card-desc">Applies the same analytical rigor to roster construction as to a mix design. Results, like concrete, take time to cure.</p>
       </div>
     </div>
+    <div class="beyond-divider"><span>Interactive</span></div>
+    <div class="beyond-grid">
+      <div class="beyond-card">
+        <div class="beyond-accent" aria-hidden="true"></div>
+        <p class="beyond-card-title">Concrete Jeopardy</p>
+        <p class="beyond-card-desc">25 questions, 5 categories — from cement chemistry to Dr. Lee's own research. Think you know your concrete?</p>
+        <a href="concrete-jeopardy.html" class="play-btn">Play &rarr;</a>
+      </div>
+      <div class="beyond-card bills">
+        <div class="beyond-accent" aria-hidden="true"></div>
+        <p class="beyond-card-title">Mafia Goal</p>
+        <p class="beyond-card-desc">Buffalo Bills field goal kicker. Time your power and your aim. Bills Mafia demands precision.</p>
+        <a href="bills-game.html" class="play-btn bills-play-btn">Play &rarr;</a>
+      </div>
+    </div>
   </div>
 </section>
 
@@ -637,4 +732,3 @@ a:focus-visible { outline: 2px solid var(--navy); outline-offset: 2px; }
 <footer class="site-footer">
   <p>ChangHoon Lee &middot; Civil &amp; Environmental Engineering &middot; Western New England University &middot; Springfield, MA</p>
 </footer>
-

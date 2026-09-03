@@ -1,0 +1,463 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Concrete Jeopardy</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Source+Sans+3:wght@300;400;600;700&display=swap">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html, body { height: 100%; }
+body {
+  font-family: 'Source Sans 3', system-ui, sans-serif;
+  background: #000B1E;
+  color: #fff;
+  min-height: 100vh;
+  -webkit-font-smoothing: antialiased;
+}
+
+.site-header {
+  background: #003087;
+  padding: 0.75rem 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.back-link {
+  color: #FFB81C;
+  text-decoration: none;
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+.back-link:hover { text-decoration: underline; }
+.header-label {
+  font-size: 0.75rem;
+  color: rgba(255,255,255,0.5);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.game-head {
+  text-align: center;
+  padding: 1.25rem 1rem 0.75rem;
+}
+.game-head h1 {
+  font-size: clamp(1.4rem, 5vw, 2.4rem);
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: #FFB81C;
+  text-shadow: 0 2px 12px rgba(0,0,0,0.6);
+}
+.game-head p {
+  font-size: 0.85rem;
+  color: rgba(255,255,255,0.45);
+  margin-top: 0.25rem;
+}
+
+.score-bar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 2.5rem;
+  padding: 0.5rem 1rem 1rem;
+}
+.score-group { text-align: center; }
+.score-label {
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.38);
+  display: block;
+  margin-bottom: 0.1rem;
+}
+.score-val {
+  font-size: 1.7rem;
+  font-weight: 700;
+  color: #FFB81C;
+  font-variant-numeric: tabular-nums;
+  min-width: 5ch;
+  display: block;
+}
+
+.board-wrap {
+  padding: 0 0.75rem 1.5rem;
+  overflow-x: auto;
+}
+.board {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 5px;
+  max-width: 880px;
+  margin: 0 auto;
+  min-width: 440px;
+}
+.cat-header {
+  background: #003087;
+  padding: 0.65rem 0.5rem;
+  text-align: center;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  color: #FFB81C;
+  border-radius: 2px;
+  line-height: 1.3;
+  min-height: 52px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.cell {
+  background: #0D3880;
+  border: 2px solid #1A52C0;
+  border-radius: 2px;
+  aspect-ratio: 4 / 3;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background 0.12s, transform 0.1s, border-color 0.12s;
+  user-select: none;
+}
+.cell:hover:not(.spent) {
+  background: #1A5AE0;
+  border-color: #FFB81C;
+  transform: scale(1.03);
+}
+.cell:active:not(.spent) { transform: scale(0.98); }
+.cell.spent {
+  background: #061428;
+  border-color: #0A1E40;
+  cursor: default;
+  pointer-events: none;
+}
+.cell-val {
+  font-size: clamp(1rem, 3.5vw, 1.75rem);
+  font-weight: 700;
+  color: #FFB81C;
+  text-shadow: 0 2px 6px rgba(0,0,0,0.7);
+  font-variant-numeric: tabular-nums;
+  transition: opacity 0.2s;
+}
+.cell.spent .cell-val { opacity: 0; }
+
+/* Modal */
+.modal-bg {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0,4,18,0.93);
+  z-index: 60;
+  align-items: center;
+  justify-content: center;
+  padding: 1.5rem;
+}
+.modal-bg.open { display: flex; }
+.modal {
+  background: #081E50;
+  border: 2px solid #FFB81C;
+  border-radius: 4px;
+  max-width: 600px;
+  width: 100%;
+  padding: 2rem 2rem 1.75rem;
+  text-align: center;
+  animation: popIn 0.2s ease;
+}
+@keyframes popIn {
+  from { opacity: 0; transform: scale(0.94); }
+  to   { opacity: 1; transform: scale(1); }
+}
+.m-cat {
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: #FFB81C;
+  margin-bottom: 0.35rem;
+}
+.m-pts {
+  font-size: 2.2rem;
+  font-weight: 700;
+  color: #FFB81C;
+  margin-bottom: 1.25rem;
+  font-variant-numeric: tabular-nums;
+  line-height: 1;
+}
+.m-rule { width: 40px; height: 2px; background: #FFB81C; margin: 0 auto 1.4rem; }
+.m-clue {
+  font-size: clamp(0.95rem, 2.5vw, 1.2rem);
+  color: #FFFFFF;
+  line-height: 1.6;
+  margin-bottom: 1.75rem;
+  min-height: 3.5em;
+}
+.reveal-btn {
+  background: transparent;
+  border: 2px solid #FFB81C;
+  color: #FFB81C;
+  font-family: inherit;
+  font-size: 0.82rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  padding: 0.65rem 1.5rem;
+  border-radius: 2px;
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s;
+}
+.reveal-btn:hover { background: #FFB81C; color: #003087; }
+.m-answer {
+  display: none;
+  background: rgba(255,184,28,0.1);
+  border-left: 3px solid #FFB81C;
+  border-radius: 2px;
+  padding: 0.85rem 1rem;
+  margin: 1.25rem 0 1.25rem;
+  font-size: 1.05rem;
+  font-weight: 600;
+  color: #FFE082;
+  text-align: left;
+  line-height: 1.5;
+}
+.m-answer.shown { display: block; }
+.mark-row {
+  display: none;
+  gap: 0.75rem;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+.mark-row.shown { display: flex; }
+.mark-btn {
+  font-family: inherit;
+  font-size: 0.85rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  padding: 0.6rem 1.2rem;
+  border-radius: 2px;
+  border: none;
+  cursor: pointer;
+  transition: opacity 0.15s, transform 0.1s;
+}
+.mark-btn:hover { opacity: 0.88; }
+.mark-btn:active { transform: scale(0.97); }
+.btn-correct { background: #1B7A40; color: #fff; }
+.btn-pass    { background: #444; color: #fff; }
+
+/* Final */
+.final-panel {
+  display: none;
+  text-align: center;
+  padding: 3rem 1.5rem;
+  animation: popIn 0.25s ease;
+}
+.final-panel.shown { display: block; }
+.final-title { font-size: clamp(1.5rem, 5vw, 2.4rem); font-weight: 700; color: #FFB81C; margin-bottom: 0.5rem; }
+.final-sub { font-size: 1rem; color: rgba(255,255,255,0.55); margin-bottom: 1.75rem; }
+.again-btn {
+  background: #FFB81C;
+  color: #003087;
+  border: none;
+  font-family: inherit;
+  font-weight: 700;
+  font-size: 0.9rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 0.8rem 2rem;
+  border-radius: 2px;
+  cursor: pointer;
+  transition: opacity 0.15s;
+}
+.again-btn:hover { opacity: 0.88; }
+
+@media (max-width: 500px) {
+  .modal { padding: 1.5rem 1rem; }
+  .m-clue { font-size: 0.95rem; }
+}
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <a href="index.html" class="back-link">&larr; Dr. Lee's Page</a>
+  <span class="header-label">WNE Civil Engineering</span>
+</header>
+
+<div class="game-head">
+  <h1>Concrete Jeopardy</h1>
+  <p>5 categories &middot; 25 questions &middot; Select a value to begin</p>
+</div>
+
+<div class="score-bar">
+  <div class="score-group">
+    <span class="score-label">Score</span>
+    <span class="score-val" id="score-disp">$0</span>
+  </div>
+  <div class="score-group">
+    <span class="score-label">Left</span>
+    <span class="score-val" id="left-disp">25</span>
+  </div>
+</div>
+
+<div class="board-wrap">
+  <div class="board" id="board"></div>
+</div>
+
+<div class="final-panel" id="final">
+  <p class="final-title" id="f-title"></p>
+  <p class="final-sub" id="f-sub"></p>
+  <button class="again-btn" onclick="init()">Play Again</button>
+</div>
+
+<!-- Question modal -->
+<div class="modal-bg" id="mbg">
+  <div class="modal">
+    <div class="m-cat" id="m-cat"></div>
+    <div class="m-pts" id="m-pts"></div>
+    <div class="m-rule"></div>
+    <div class="m-clue" id="m-clue"></div>
+    <button class="reveal-btn" id="rev-btn" onclick="reveal()">Reveal Answer</button>
+    <div class="m-answer" id="m-ans"></div>
+    <div class="mark-row" id="mark-row">
+      <button class="mark-btn btn-correct" id="correct-btn" onclick="mark(true)">Correct</button>
+      <button class="mark-btn btn-pass" onclick="mark(null)">Pass / Next</button>
+    </div>
+  </div>
+</div>
+
+<script>
+const CATS = ['Cement Science','Mix Design','Structural Behavior','Durability',"Lee's Lab"];
+const VALS = [200,400,600,800,1000];
+
+const QS = [
+  [ // Cement Science
+    {c:'The primary binding compound in Portland cement, responsible for most early strength gain in the first 28 days.',a:'What is C₃S? (tricalcium silicate / alite)'},
+    {c:'The exothermic chemical reaction between cement and water that causes concrete to stiffen and harden.',a:'What is hydration?'},
+    {c:'The typical water-to-cement ratio range for standard structural concrete, balancing strength and workability.',a:'What is 0.40 to 0.50?'},
+    {c:'This chemical byproduct of cement hydration gives concrete its high alkalinity and passivates embedded steel reinforcement.',a:'What is calcium hydroxide? (portlandite / Ca(OH)₂)'},
+    {c:'In massive concrete placements, this phenomenon — caused by differential hydration heat across a thick section — can crack the structure before it reaches full strength.',a:'What is thermal gradient cracking? (mass concrete problem)'}
+  ],
+  [ // Mix Design
+    {c:'This ASTM standard test measures fresh concrete consistency by filling and lifting a metal cone and measuring the drop.',a:'What is the slump test? (ASTM C143)'},
+    {c:'Standard concrete compressive strength is determined after this many days of moist curing.',a:'What is 28 days?'},
+    {c:'This industrial byproduct of coal combustion can replace 20–30% of Portland cement, improving long-term durability and workability.',a:'What is fly ash?'},
+    {c:'For a high-strength concrete mix targeting more than 8,000 psi, the water-to-cement ratio must generally stay below this value.',a:'What is 0.35?'},
+    {c:'Dr. Lee\'s research showed that this shape property of coarse aggregate particles significantly influences the mechanical performance of hardened cement-based materials.',a:'What is angularity?'}
+  ],
+  [ // Structural Behavior
+    {c:'Concrete\'s compressive strength is typically this many times greater than its tensile strength.',a:'What is 8 to 10 times?'},
+    {c:'Steel bars embedded in concrete to provide the tensile resistance the concrete alone cannot supply.',a:'What is rebar? (reinforcing steel)'},
+    {c:'In a simply supported beam loaded from above with uniform load, the top fiber of the midspan cross-section experiences this type of stress.',a:'What is compression?'},
+    {c:'The ACI 318 factored load combination for dead load D and live load L used in structural design.',a:'What is 1.2D + 1.6L?'},
+    {c:'This non-destructive evaluation method — studied by Dr. Lee without contact — sends acoustic pulses through concrete to detect voids, cracks, or changes in stiffness.',a:'What is ultrasonic pulse velocity? (UPV / contactless ultrasonic)'}
+  ],
+  [ // Durability
+    {c:'The primary ion responsible for corrosion initiation in reinforced concrete structures near the ocean.',a:'What is chloride? (Cl⁻)'},
+    {c:'This process reduces concrete\'s pH as atmospheric CO₂ reacts with calcium hydroxide, eventually depassivating the embedded rebar.',a:'What is carbonation?'},
+    {c:'Dr. Lee\'s research uses this temperature-time index to predict when concrete achieves a target strength without destructive testing.',a:'What is the maturity method?'},
+    {c:'Ground granulated blast furnace slag, used as a cement replacement, reduces permeability and improves resistance to this type of chemical attack.',a:'What is sulfate attack?'},
+    {c:'ASTM C666 subjects concrete specimens to repeated cycles of this environmental stress to evaluate frost resistance.',a:'What is freezing and thawing?'}
+  ],
+  [ // Lee's Lab
+    {c:'The WNE campus building where Dr. Lee\'s office — Room 303D — is located.',a:'What is Sleith Hall?'},
+    {c:'The peer-reviewed journal that published Dr. Lee\'s 2019 study on coarse aggregate angularity and cement-based material performance.',a:'What is Construction and Building Materials?'},
+    {c:'Dr. Lee\'s student research team earned 2nd place at this organization\'s 2025 Connecticut chapter structural engineering seminar.',a:'What is ASCE? (American Society of Civil Engineers)'},
+    {c:'This three-letter acronym names the novel 3D particle geometry descriptor introduced in Dr. Lee\'s 2020 Transportation Geotechnics paper.',a:'What is MAVL?'},
+    {c:'The federal transportation research consortium that funded Dr. Lee\'s 2025 study on bond-slip performance in corrosion-damaged reinforced concrete.',a:'What is TIDC? (Transportation Infrastructure Durability Center)'}
+  ]
+];
+
+let score = 0, left = 25, cur = null;
+
+function init() {
+  score = 0; left = 25; cur = null;
+  document.getElementById('score-disp').textContent = '$0';
+  document.getElementById('left-disp').textContent = '25';
+  document.getElementById('final').classList.remove('shown');
+  buildBoard();
+  closeModal();
+}
+
+function buildBoard() {
+  const b = document.getElementById('board');
+  b.innerHTML = '';
+  CATS.forEach(n => {
+    const h = document.createElement('div');
+    h.className = 'cat-header';
+    h.textContent = n;
+    b.appendChild(h);
+  });
+  for (let vi = 0; vi < 5; vi++) {
+    for (let ci = 0; ci < 5; ci++) {
+      const el = document.createElement('div');
+      el.className = 'cell';
+      el.id = `c${ci}_${vi}`;
+      el.innerHTML = `<span class="cell-val">$${VALS[vi]}</span>`;
+      el.onclick = () => open(ci, vi);
+      b.appendChild(el);
+    }
+  }
+}
+
+function open(ci, vi) {
+  const el = document.getElementById(`c${ci}_${vi}`);
+  if (el.classList.contains('spent')) return;
+  cur = {ci, vi};
+  const q = QS[ci][vi];
+  document.getElementById('m-cat').textContent = CATS[ci];
+  document.getElementById('m-pts').textContent = `$${VALS[vi]}`;
+  document.getElementById('m-clue').textContent = q.c;
+  document.getElementById('m-ans').textContent = q.a;
+  document.getElementById('m-ans').classList.remove('shown');
+  document.getElementById('rev-btn').style.display = 'inline-block';
+  document.getElementById('mark-row').classList.remove('shown');
+  document.getElementById('correct-btn').textContent = `Correct (+$${VALS[vi]})`;
+  document.getElementById('mbg').classList.add('open');
+}
+
+function reveal() {
+  document.getElementById('m-ans').classList.add('shown');
+  document.getElementById('rev-btn').style.display = 'none';
+  document.getElementById('mark-row').classList.add('shown');
+}
+
+function mark(correct) {
+  if (!cur) return;
+  if (correct) score += VALS[cur.vi];
+  document.getElementById(`c${cur.ci}_${cur.vi}`).classList.add('spent');
+  left--;
+  updateHUD();
+  closeModal();
+  if (left === 0) showFinal();
+}
+
+function closeModal() {
+  document.getElementById('mbg').classList.remove('open');
+  cur = null;
+}
+
+function updateHUD() {
+  document.getElementById('score-disp').textContent = `$${score.toLocaleString()}`;
+  document.getElementById('left-disp').textContent = left;
+}
+
+function showFinal() {
+  document.getElementById('final').classList.add('shown');
+  const t = document.getElementById('f-title');
+  const s = document.getElementById('f-sub');
+  if (score >= 10000) { t.textContent = 'Concrete Expert!'; s.textContent = `You scored $${score.toLocaleString()}. Dr. Lee would be proud.`; }
+  else if (score >= 6000) { t.textContent = 'Strong Mix!'; s.textContent = `You scored $${score.toLocaleString()}. Solid structural knowledge.`; }
+  else if (score >= 3000) { t.textContent = 'Good Set!'; s.textContent = `You scored $${score.toLocaleString()}. More curing time needed.`; }
+  else { t.textContent = 'Keep Studying!'; s.textContent = `You scored $${score.toLocaleString()}. Even concrete starts uncured.`; }
+}
+
+document.getElementById('mbg').addEventListener('click', e => { if (e.target === document.getElementById('mbg')) closeModal(); });
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
+
+init();
+</script>
+</body>
+</html>
