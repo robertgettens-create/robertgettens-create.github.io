@@ -1,0 +1,734 @@
+<title>ChangHoon Lee</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Source+Sans+3:wght@300;400;600;700&display=swap">
+<style>
+
+/* ── Design Tokens ─────────────────────────────────────────── */
+:root {
+  --bg:          #EFECE6;
+  --surface:     #F8F6F2;
+  --text:        #1C1810;
+  --text-muted:  #6A6458;
+  --text-faint:  #A09080;
+  --navy:        #003087;
+  --gold:        #C88C00;
+  --gold-hi:     #FFB81C;
+  --border:      #DDD8D0;
+  --radius:      3px;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg:          #181511;
+    --surface:     #211E18;
+    --text:        #EDE9E2;
+    --text-muted:  #9E9888;
+    --text-faint:  #5E5A52;
+    --navy:        #5B8FEC;
+    --gold:        #FFB81C;
+    --gold-hi:     #FFB81C;
+    --border:      #2E2A22;
+  }
+}
+:root[data-theme="dark"] {
+  --bg:          #181511;
+  --surface:     #211E18;
+  --text:        #EDE9E2;
+  --text-muted:  #9E9888;
+  --text-faint:  #5E5A52;
+  --navy:        #5B8FEC;
+  --gold:        #FFB81C;
+  --gold-hi:     #FFB81C;
+  --border:      #2E2A22;
+}
+
+/* ── Reset ─────────────────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: 'Source Sans 3', system-ui, sans-serif;
+  font-size: 17px;
+  line-height: 1.65;
+  color: var(--text);
+  background: var(--bg);
+  -webkit-font-smoothing: antialiased;
+}
+img { max-width: 100%; display: block; }
+a { color: var(--navy); }
+a:focus-visible { outline: 2px solid var(--navy); outline-offset: 2px; }
+
+/* ── Top Bar ──────────────────────────────────────────────── */
+.topbar {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: #003087;
+  height: 52px;
+  display: flex;
+  align-items: center;
+  padding: 0 2.5rem;
+  gap: 1.5rem;
+}
+.topbar-brand {
+  font-weight: 700;
+  font-size: 0.75rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: #FFB81C;
+  white-space: nowrap;
+}
+.topbar-sep { width: 1px; height: 18px; background: rgba(255,255,255,0.2); }
+.topbar-name { font-size: 0.88rem; color: rgba(255,255,255,0.65); white-space: nowrap; }
+.topbar-nav { margin-left: auto; display: flex; gap: 2rem; list-style: none; }
+.topbar-nav a {
+  font-size: 0.75rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.65);
+  text-decoration: none;
+  transition: color 0.18s;
+}
+.topbar-nav a:hover { color: #FFB81C; }
+
+/* ── Hero with concrete photo background ──────────────────── */
+.hero {
+  position: relative;
+  overflow: hidden;
+  background: #1C1914;
+  padding: 5rem 2.5rem 5.5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+/* Two concrete photos split left / right */
+.hero-photos {
+  position: absolute;
+  inset: 0;
+  display: flex;
+}
+.hero-photo-l,
+.hero-photo-r {
+  flex: 0 0 50%;
+  background-size: cover;
+  background-position: center;
+}
+.hero-photo-l {
+  background-image: url('https://upload.wikimedia.org/wikipedia/commons/5/52/Concrete_texture.jpg');
+}
+.hero-photo-r {
+  background-image: url('https://upload.wikimedia.org/wikipedia/commons/1/15/Textured_Concrete_Wall.jpg');
+}
+/* Dark + navy overlay for legibility */
+.hero-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to bottom,
+    rgba(28,25,20,0.88) 0%,
+    rgba(8,18,58,0.74) 45%,
+    rgba(28,25,20,0.88) 100%
+  );
+}
+.hero-glow {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse 80% 70% at 50% 55%, rgba(0,48,135,0.42) 0%, transparent 65%);
+}
+.hero-content {
+  position: relative;
+  z-index: 1;
+  max-width: 820px;
+}
+.hero-stamp {
+  font-weight: 700;
+  font-size: 0.78rem;
+  letter-spacing: 0.32em;
+  text-transform: uppercase;
+  color: #FFB81C;
+  margin-bottom: 1.5rem;
+}
+.hero-name {
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: clamp(3.2rem, 9vw, 5.8rem);
+  font-weight: 700;
+  line-height: 1.05;
+  color: #F5F1EB;
+  text-wrap: balance;
+  margin-bottom: 1.2rem;
+  letter-spacing: -0.015em;
+}
+.hero-name em { font-style: italic; font-weight: 400; color: rgba(245,241,235,0.75); }
+.hero-title {
+  font-weight: 300;
+  font-size: clamp(0.88rem, 2.2vw, 1.05rem);
+  letter-spacing: 0.06em;
+  color: rgba(245,241,235,0.62);
+  margin-bottom: 2.4rem;
+}
+.hero-rule { width: 44px; height: 2px; background: #FFB81C; margin: 0 auto 2.2rem; }
+.hero-intro {
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: clamp(1.1rem, 2.8vw, 1.35rem);
+  font-style: italic;
+  line-height: 1.7;
+  color: rgba(245,241,235,0.68);
+  max-width: 52ch;
+}
+
+/* ── Section Shell ────────────────────────────────────────── */
+.section { padding: 4.5rem 2.5rem; }
+.section-inner { max-width: 800px; margin: 0 auto; }
+.eyebrow {
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--navy);
+  margin-bottom: 0.4rem;
+  display: block;
+}
+.section-heading {
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: clamp(1.85rem, 4.5vw, 2.6rem);
+  font-weight: 600;
+  line-height: 1.2;
+  color: var(--text);
+  text-wrap: balance;
+  margin-bottom: 1.75rem;
+}
+.rule { width: 36px; height: 2px; background: var(--gold); margin-bottom: 1.75rem; }
+.surface { background: var(--surface); }
+
+/* ── Bio with headshot ────────────────────────────────────── */
+.bio-layout {
+  display: grid;
+  grid-template-columns: 1fr 195px;
+  gap: 3rem;
+  align-items: start;
+}
+.bio-body { display: flex; flex-direction: column; gap: 1.1em; }
+.bio-body p { font-size: 1.04rem; line-height: 1.78; }
+.bio-photo-wrap { position: sticky; top: 68px; }
+.bio-photo-wrap img {
+  width: 100%;
+  aspect-ratio: 3 / 4;
+  object-fit: cover;
+  object-position: top center;
+  border-radius: var(--radius);
+  border-top: 3px solid var(--gold);
+  box-shadow: 0 6px 20px rgba(0,0,0,0.13);
+}
+.photo-credit {
+  font-size: 0.68rem;
+  color: var(--text-faint);
+  text-align: center;
+  margin-top: 0.4rem;
+  letter-spacing: 0.04em;
+}
+
+/* ── Teaching ─────────────────────────────────────────────── */
+.courses {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(290px, 1fr));
+  gap: 1.5rem;
+}
+.course {
+  border-top: 3px solid var(--navy);
+  padding: 1.5rem 1.5rem 1.6rem;
+  background: var(--bg);
+  border-radius: 0 0 var(--radius) var(--radius);
+}
+.course-code {
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--text-faint);
+  margin-bottom: 0.4rem;
+}
+.course-title {
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: 1.3rem;
+  font-weight: 600;
+  color: var(--text);
+  margin-bottom: 0.55rem;
+}
+.course-desc { font-size: 0.92rem; color: var(--text-muted); line-height: 1.6; }
+
+/* ── Publications ─────────────────────────────────────────── */
+.research-focus {
+  font-size: 1.02rem;
+  color: var(--text-muted);
+  line-height: 1.7;
+  max-width: 64ch;
+  margin-bottom: 2rem;
+}
+.papers { border-top: 1px solid var(--border); }
+.paper {
+  padding: 1.1rem 0;
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+}
+.paper-title {
+  font-size: 0.98rem;
+  font-weight: 600;
+  color: var(--text);
+  text-decoration: none;
+  line-height: 1.45;
+}
+.paper-title:hover { color: var(--navy); text-decoration: underline; text-underline-offset: 2px; }
+.paper-meta { font-size: 0.82rem; color: var(--text-faint); font-style: italic; }
+.scholar-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  margin-top: 1.5rem;
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: var(--navy);
+  text-decoration: none;
+}
+.scholar-link:hover { text-decoration: underline; }
+
+/* ── Beyond ───────────────────────────────────────────────── */
+.beyond-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+  gap: 1rem;
+}
+.beyond-card {
+  padding: 1.5rem 1.4rem 1.6rem;
+  border-radius: var(--radius);
+  background: var(--bg);
+  border: 1px solid var(--border);
+  display: flex;
+  flex-direction: column;
+  gap: 0.45rem;
+}
+.beyond-card.bills { background: #003087; border-color: #003087; }
+.beyond-accent { width: 20px; height: 2px; background: var(--gold); margin-bottom: 0.2rem; }
+.beyond-card.bills .beyond-accent { background: #FFB81C; }
+.beyond-card-title { font-weight: 700; font-size: 0.97rem; color: var(--text); }
+.beyond-card.bills .beyond-card-title { color: #FFB81C; }
+.beyond-card-desc { font-size: 0.86rem; color: var(--text-muted); line-height: 1.5; }
+.beyond-card.bills .beyond-card-desc { color: rgba(255,255,255,0.7); }
+.beyond-divider {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin: 2rem 0 1rem;
+}
+.beyond-divider::before,
+.beyond-divider::after { content: ''; flex: 1; height: 1px; background: var(--border); }
+.beyond-divider span {
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--text-faint);
+  white-space: nowrap;
+}
+.play-btn {
+  display: inline-block;
+  margin-top: 0.65rem;
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: var(--navy);
+  text-decoration: none;
+  letter-spacing: 0.03em;
+}
+.play-btn:hover { text-decoration: underline; }
+.bills-play-btn { color: #FFB81C; }
+.course-spring {
+  font-size: 0.62rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 0.1rem;
+}
+.courses-spring {
+  margin-top: 1.5rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--border);
+}
+.semester-eyebrow {
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--text-faint);
+  margin-bottom: 1rem;
+}
+
+/* ── Contact ──────────────────────────────────────────────── */
+.contact-wrap {
+  position: relative;
+  background: #1C1914;
+  padding: 5rem 2.5rem;
+  overflow: hidden;
+}
+.contact-grain {
+  position: absolute;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='250' height='250'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.72' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='250' height='250' filter='url(%23n)'/%3E%3C/svg%3E");
+  opacity: 0.055;
+  pointer-events: none;
+}
+.contact-inner {
+  position: relative;
+  z-index: 1;
+  max-width: 800px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 3.5rem;
+  align-items: start;
+}
+.contact-heading {
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: clamp(1.7rem, 4vw, 2.3rem);
+  font-weight: 600;
+  color: #F5F1EB;
+  margin-bottom: 0.6rem;
+  text-wrap: balance;
+}
+.contact-sub {
+  font-size: 0.95rem;
+  color: rgba(245,241,235,0.52);
+  line-height: 1.65;
+  margin-bottom: 2rem;
+}
+.contact-details { display: flex; flex-direction: column; gap: 1.25rem; }
+.contact-label {
+  display: block;
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: #FFB81C;
+  margin-bottom: 0.2rem;
+}
+.contact-value { font-size: 0.97rem; color: rgba(245,241,235,0.82); line-height: 1.55; }
+.contact-value a { color: rgba(245,241,235,0.82); text-decoration: underline; text-underline-offset: 2px; }
+
+/* Campus photo in contact */
+.building-photo-wrap { display: flex; flex-direction: column; gap: 0.5rem; }
+.building-photo-wrap img {
+  width: 100%;
+  aspect-ratio: 3 / 2;
+  object-fit: cover;
+  border-radius: var(--radius);
+  border-top: 3px solid #FFB81C;
+  opacity: 0.85;
+}
+.building-caption {
+  font-size: 0.68rem;
+  color: rgba(245,241,235,0.38);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+/* ── Footer ──────────────────────────────────────────────── */
+.site-footer { background: #003087; padding: 1.25rem 2.5rem; text-align: center; }
+.site-footer p { font-size: 0.78rem; color: rgba(255,255,255,0.45); }
+
+/* ── Responsive ──────────────────────────────────────────── */
+@media (max-width: 680px) {
+  .topbar-nav { display: none; }
+  .hero { padding: 3.5rem 1.5rem 4rem; }
+  .section { padding: 3.5rem 1.5rem; }
+  .contact-wrap { padding: 3.5rem 1.5rem; }
+  .contact-inner { grid-template-columns: 1fr; gap: 2.5rem; }
+  .bio-layout { grid-template-columns: 1fr; }
+  .bio-photo-wrap { position: static; max-width: 180px; }
+}
+
+/* ── Motion ──────────────────────────────────────────────── */
+@media (prefers-reduced-motion: no-preference) {
+  .hero-stamp  { animation: rise 0.55s ease both 0.05s; }
+  .hero-name   { animation: rise 0.55s ease both 0.15s; }
+  .hero-title  { animation: rise 0.55s ease both 0.25s; }
+  .hero-rule   { animation: rise 0.55s ease both 0.33s; }
+  .hero-intro  { animation: rise 0.55s ease both 0.42s; }
+}
+@keyframes rise {
+  from { opacity: 0; transform: translateY(16px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+</style>
+
+<!-- ── Navigation ──────────────────────────────────────────── -->
+<header>
+  <nav class="topbar">
+    <span class="topbar-brand">WNE Civil Engineering</span>
+    <div class="topbar-sep"></div>
+    <span class="topbar-name">ChangHoon Lee</span>
+    <ul class="topbar-nav">
+      <li><a href="#about">About</a></li>
+      <li><a href="#teaching">Teaching</a></li>
+      <li><a href="#research">Research</a></li>
+      <li><a href="#beyond">Beyond</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </nav>
+</header>
+
+<!-- ── Hero: two concrete photos + overlay ────────────────── -->
+<section class="hero">
+  <div class="hero-photos" aria-hidden="true">
+    <div class="hero-photo-l"></div>
+    <div class="hero-photo-r"></div>
+  </div>
+  <div class="hero-overlay" aria-hidden="true"></div>
+  <div class="hero-glow" aria-hidden="true"></div>
+  <div class="hero-content">
+    <p class="hero-stamp">The Concrete Guy</p>
+    <h1 class="hero-name">ChangHoon <em>Lee</em></h1>
+    <p class="hero-title">Associate Professor of Civil Engineering &nbsp;&middot;&nbsp; Western New England University</p>
+    <div class="hero-rule" aria-hidden="true"></div>
+    <p class="hero-intro">Building things that hold. Teaching the next generation of engineers why they do.</p>
+  </div>
+</section>
+
+<!-- ── About ──────────────────────────────────────────────── -->
+<section id="about" class="section">
+  <div class="section-inner">
+    <span class="eyebrow">About</span>
+    <h2 class="section-heading">A Structural Engineer at Heart</h2>
+    <div class="rule" aria-hidden="true"></div>
+    <div class="bio-layout">
+      <div class="bio-body">
+        <p>
+          ChangHoon Lee is an Associate Professor in the Civil &amp; Environmental Engineering department
+          at Western New England University, where they have spent years doing what they love most:
+          getting their hands on concrete and helping students understand why structures stand. Their
+          expertise spans reinforced concrete design, structural mechanics, and the science of
+          cement-based materials — from chemical and mechanical properties to multi-scale
+          characterization and environmental durability.
+        </p>
+        <p>
+          Ask them what they do, and the answer is simple: they're a concrete guy. Not by accident —
+          by conviction. There is something honest about concrete. It is heavy and slow, and when you
+          get the mix right, it outlasts everything around it. Lee brings that same unhurried precision
+          to the classroom, where the goal is always the same: build understanding that holds.
+        </p>
+      </div>
+      <div class="bio-photo-wrap">
+        <img src="https://wne.edu/directory/img/fdbs_CHL_profile_photo_WNE.jpg"
+             alt="Associate Professor ChangHoon Lee">
+        <p class="photo-credit">Western New England University</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── Teaching ───────────────────────────────────────────── -->
+<section id="teaching" class="section surface">
+  <div class="section-inner">
+    <span class="eyebrow">Teaching</span>
+    <h2 class="section-heading">Courses</h2>
+    <div class="rule" aria-hidden="true"></div>
+    <div class="courses">
+      <div class="course">
+        <p class="course-code">CEE 341</p>
+        <p class="course-title">Structural Analysis</p>
+        <p class="course-desc">
+          A rigorous treatment of statically determinate and indeterminate structures — beams,
+          trusses, frames — using classical and matrix methods. Emphasis on engineering judgment
+          alongside analytical skill: knowing not just how a structure behaves, but why.
+        </p>
+      </div>
+      <div class="course">
+        <p class="course-code">ENGR 103</p>
+        <p class="course-title">Introduction to Engineering</p>
+        <p class="course-desc">
+          A first-year survey that introduces students to the engineering profession, problem-solving
+          methodology, and hands-on design. A course Lee finds as energizing to teach as any
+          upper-division subject — the enthusiasm in the room is unmatched.
+        </p>
+      </div>
+    </div>
+    <div class="courses-spring">
+      <p class="semester-eyebrow">Spring Semester</p>
+      <div class="courses">
+        <div class="course">
+          <p class="course-code">ENGR 110</p>
+          <p class="course-title">Data Acquisition &amp; Processing</p>
+          <p class="course-desc">
+            Hands-on introduction to sensor systems, data loggers, and signal processing — the
+            instrumentation layer that sits between physical phenomena and the numbers engineers use.
+            Connects directly to Dr. Lee's work in concrete stiffening measurement.
+          </p>
+        </div>
+        <div class="course">
+          <p class="course-code">CEE 342</p>
+          <p class="course-title">Steel &amp; Reinforced Concrete Structures</p>
+          <p class="course-desc">
+            Design of structural members in steel and reinforced concrete, following AISC and ACI 318.
+            Covers beams, columns, connections, and composite systems — the practical extension of
+            structural analysis into real construction.
+          </p>
+        </div>
+        <div class="course">
+          <p class="course-code">CEE 451</p>
+          <p class="course-title">Construction Materials</p>
+          <p class="course-desc">
+            The properties, testing, and selection of materials used in construction: concrete,
+            steel, wood, asphalt, and composites. Dr. Lee's home territory — from mix design
+            to maturity prediction to durability assessment.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── Research / Publications ────────────────────────────── -->
+<section id="research" class="section">
+  <div class="section-inner">
+    <span class="eyebrow">Research</span>
+    <h2 class="section-heading">Selected Publications</h2>
+    <div class="rule" aria-hidden="true"></div>
+    <p class="research-focus">
+      Dr. Lee's scholarly work centers on cement-based materials — their chemical and mechanical
+      properties, multi-scale characterization, and how temperature, moisture, and aggregate
+      morphology affect durability and structural performance. Recent work extends to bond-slip
+      behavior in corrosion-damaged reinforced concrete.
+    </p>
+    <div class="papers">
+      <div class="paper">
+        <a class="paper-title"
+           href="https://scholar.google.com/scholar?q=influence+coarse+aggregate+angularity+mechanical+performance+cement-based+materials+ChangHoon+Lee"
+           target="_blank" rel="noopener">
+          Influence of coarse aggregate angularity on the mechanical performance of cement-based materials
+        </a>
+        <span class="paper-meta">Construction and Building Materials &middot; 2019</span>
+      </div>
+      <div class="paper">
+        <a class="paper-title"
+           href="https://scholar.google.com/scholar?q=new+interpretation+three-dimensional+particle+geometry+MAVL+ChangHoon+Lee"
+           target="_blank" rel="noopener">
+          A new interpretation of three-dimensional particle geometry: MAVL
+        </a>
+        <span class="paper-meta">Transportation Geotechnics &middot; 2020</span>
+      </div>
+      <div class="paper">
+        <a class="paper-title"
+           href="https://scholar.google.com/scholar?q=evaluation+stiffening+behavior+concrete+contactless+ultrasonic+maturity+ChangHoon+Lee"
+           target="_blank" rel="noopener">
+          Evaluation of stiffening behavior of concrete based on contactless ultrasonic system and maturity method
+        </a>
+        <span class="paper-meta">Construction and Building Materials &middot; 2020</span>
+      </div>
+      <div class="paper">
+        <a class="paper-title"
+           href="https://scholar.google.com/scholar?q=compatible+datum+temperature+activation+energy+concrete+maturity+ChangHoon+Lee"
+           target="_blank" rel="noopener">
+          Compatible Datum Temperature and Activation Energy for Concrete Maturity
+        </a>
+        <span class="paper-meta">ACI Materials Journal &middot; 2016</span>
+      </div>
+      <div class="paper">
+        <a class="paper-title"
+           href="https://tidc.umaine.edu/wp-content/uploads/sites/561/2025/12/3.05-final-report.pdf"
+           target="_blank" rel="noopener">
+          Characterization of Bond&ndash;Slip Performance in Damaged Reinforced Concrete due to Corrosion
+        </a>
+        <span class="paper-meta">Transportation Infrastructure Durability Center &middot; 2025</span>
+      </div>
+    </div>
+    <a class="scholar-link"
+       href="https://scholar.google.com/citations?user=07OP1YoAAAAJ"
+       target="_blank" rel="noopener">
+      View complete publication list on Google Scholar &rarr;
+    </a>
+  </div>
+</section>
+
+<!-- ── Beyond the Classroom ───────────────────────────────── -->
+<section id="beyond" class="section surface">
+  <div class="section-inner">
+    <span class="eyebrow">Beyond the Classroom</span>
+    <h2 class="section-heading">Life Off the Job Site</h2>
+    <div class="rule" aria-hidden="true"></div>
+    <div class="beyond-grid">
+      <div class="beyond-card">
+        <div class="beyond-accent" aria-hidden="true"></div>
+        <p class="beyond-card-title">Piano</p>
+        <p class="beyond-card-desc">A serious pianist who finds in music the same satisfaction as a well-proportioned structure — form following function, nothing wasted.</p>
+      </div>
+      <div class="beyond-card">
+        <div class="beyond-accent" aria-hidden="true"></div>
+        <p class="beyond-card-title">Tennis</p>
+        <p class="beyond-card-desc">On the court whenever the weather allows. Enjoys the game for its demand for technical precision and constant, quick adjustment.</p>
+      </div>
+      <div class="beyond-card bills">
+        <div class="beyond-accent" aria-hidden="true"></div>
+        <p class="beyond-card-title">Buffalo Bills</p>
+        <p class="beyond-card-desc">A proud Bills Mafia member. Watches every game, wins and loses with the same loyalty, and will make absolutely no apologies for it.</p>
+      </div>
+      <div class="beyond-card">
+        <div class="beyond-accent" aria-hidden="true"></div>
+        <p class="beyond-card-title">Fantasy Football</p>
+        <p class="beyond-card-desc">Applies the same analytical rigor to roster construction as to a mix design. Results, like concrete, take time to cure.</p>
+      </div>
+    </div>
+    <div class="beyond-divider"><span>Interactive</span></div>
+    <div class="beyond-grid">
+      <div class="beyond-card">
+        <div class="beyond-accent" aria-hidden="true"></div>
+        <p class="beyond-card-title">Concrete Jeopardy</p>
+        <p class="beyond-card-desc">25 questions, 5 categories — from cement chemistry to Dr. Lee's own research. Think you know your concrete?</p>
+        <a href="concrete-jeopardy.html" class="play-btn">Play &rarr;</a>
+      </div>
+      <div class="beyond-card bills">
+        <div class="beyond-accent" aria-hidden="true"></div>
+        <p class="beyond-card-title">Mafia Goal</p>
+        <p class="beyond-card-desc">Buffalo Bills field goal kicker. Time your power and your aim. Bills Mafia demands precision.</p>
+        <a href="bills-game.html" class="play-btn bills-play-btn">Play &rarr;</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── Contact ─────────────────────────────────────────────── -->
+<section id="contact" class="contact-wrap">
+  <div class="contact-grain" aria-hidden="true"></div>
+  <div class="contact-inner">
+    <div>
+      <h2 class="contact-heading">Get in Touch</h2>
+      <p class="contact-sub">Whether you are a student, a collaborator, or simply someone who wants to talk concrete — the door is open.</p>
+      <div class="contact-details">
+        <div>
+          <span class="contact-label">Email</span>
+          <span class="contact-value">cl363853@wne.edu</span>
+        </div>
+        <div>
+          <span class="contact-label">Phone</span>
+          <span class="contact-value">+1 (413) 782-1430</span>
+        </div>
+        <div>
+          <span class="contact-label">Office</span>
+          <span class="contact-value">303D Sleith Hall<br>Western New England University<br>Springfield, MA 01119</span>
+        </div>
+        <div>
+          <span class="contact-label">Department</span>
+          <span class="contact-value">Civil &amp; Environmental Engineering</span>
+        </div>
+      </div>
+    </div>
+    <div class="building-photo-wrap">
+      <img src="https://upload.wikimedia.org/wikipedia/commons/7/70/Western_New_England_College_campus_07.jpg"
+           alt="Western New England University campus, Springfield MA">
+      <p class="building-caption">Western New England University &middot; Springfield, MA</p>
+    </div>
+  </div>
+</section>
+
+<!-- ── Footer ─────────────────────────────────────────────── -->
+<footer class="site-footer">
+  <p>ChangHoon Lee &middot; Civil &amp; Environmental Engineering &middot; Western New England University &middot; Springfield, MA</p>
+</footer>
