@@ -461,6 +461,103 @@ h2 {
   max-width: 70ch;
 }
 
+/* ---------- Start lights ---------- */
+.gantry-wrap {
+  display: grid;
+  grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr);
+  gap: clamp(1.6rem, 4vw, 3rem);
+  align-items: center;
+  margin-top: 2rem;
+}
+.gantry {
+  background: linear-gradient(170deg, #16233A 0%, #0A1220 100%);
+  border: 1px solid rgba(255, 255, 255, 0.09);
+  border-radius: 6px;
+  padding: 1.5rem 1.3rem 1.6rem;
+  cursor: pointer;
+  user-select: none;
+  text-align: center;
+  box-shadow: 0 14px 34px rgba(10, 27, 51, 0.22);
+  transition: border-color 0.2s;
+}
+.gantry:hover, .gantry:focus-visible { border-color: rgba(240, 185, 60, 0.5); outline: none; }
+.gantry .rail {
+  height: 7px;
+  border-radius: 3px;
+  background: linear-gradient(180deg, #3A4A63, #1B2740);
+  margin: 0 auto 0.55rem;
+  max-width: 92%;
+}
+.lights {
+  display: flex;
+  justify-content: center;
+  gap: clamp(0.45rem, 2vw, 0.95rem);
+}
+.col {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  padding: 5px;
+  background: #0C1526;
+  border: 1px solid rgba(255, 255, 255, 0.07);
+  border-radius: 5px;
+}
+.bulb {
+  width: clamp(22px, 5.2vw, 34px);
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: #2B1116;
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.75);
+  transition: background 60ms linear, box-shadow 60ms linear;
+}
+.col.lit .bulb {
+  background: radial-gradient(circle at 36% 30%, #FF8A7A 0%, #E8202B 48%, #A00B14 100%);
+  box-shadow: 0 0 16px rgba(232, 32, 43, 0.8), inset 0 1px 2px rgba(255, 255, 255, 0.35);
+}
+.gantry .readout {
+  margin-top: 1.25rem;
+  font-family: var(--serif);
+  font-size: clamp(1.8rem, 5vw, 2.6rem);
+  font-weight: 700;
+  line-height: 1.1;
+  color: var(--gold-lit);
+  min-height: 1.15em;
+}
+.gantry .readout.bad { color: #FF7B6B; }
+.gantry .prompt {
+  margin-top: 0.35rem;
+  font-size: 0.76rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  font-weight: 600;
+  color: rgba(251, 247, 240, 0.5);
+}
+.reaction-copy p { color: var(--ink-soft); max-width: 46ch; }
+.reaction-copy p + p { margin-top: 0.9rem; }
+.reaction-copy .best {
+  margin-top: 1.2rem;
+  font-size: 0.8rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  font-weight: 700;
+  color: var(--navy);
+}
+.scale { list-style: none; margin-top: 1.2rem; font-size: 0.87rem; }
+.scale li {
+  display: grid;
+  grid-template-columns: 5.6rem 1fr;
+  gap: 0.7rem;
+  padding: 0.4rem 0;
+  border-bottom: 1px solid var(--rule);
+  color: var(--ink-soft);
+}
+.scale li:last-child { border-bottom: none; }
+.scale b { color: var(--navy); font-variant-numeric: tabular-nums; }
+
+@media (max-width: 780px) {
+  .gantry-wrap { grid-template-columns: 1fr; }
+}
+
 /* ---------- Contact ---------- */
 .contact-grid {
   display: grid;
@@ -543,6 +640,7 @@ footer .wrap { display: flex; justify-content: space-between; gap: 1rem; flex-wr
       <a href="#about">About</a>
       <a href="#research">Research</a>
       <a href="#interests">Interests</a>
+      <a href="#lights">Lights</a>
       <a href="#listen">Listen</a>
       <a href="#contact">Contact</a>
     </nav>
@@ -593,9 +691,11 @@ footer .wrap { display: flex; justify-content: space-between; gap: 1rem; flex-wr
         <p class="thesis">You really can have all of it &mdash; the work, the craft, the race, and the record.</p>
       </div>
 
-      <!-- Swap the .monogram span for <img src="mike-mannheim.jpg" alt="Mike Mannheim"> when a headshot is available. -->
       <figure class="portrait">
-        <div class="frame"><span class="monogram">MM</span></div>
+        <div class="frame">
+          <img src="mike-mannheim.jpg" width="560" height="700"
+               alt="Mike Mannheim, health sciences librarian at Western New England University">
+        </div>
         <figcaption>D&rsquo;Amour Library</figcaption>
       </figure>
     </div>
@@ -617,6 +717,7 @@ footer .wrap { display: flex; justify-content: space-between; gap: 1rem; flex-wr
       <ul class="factlist">
         <li><span class="k">Role</span><span class="v">Health Sciences Librarian, College of Pharmacy &amp; Health Sciences</span></li>
         <li><span class="k">At WNE</span><span class="v">Since 2017</span></li>
+        <li><span class="k">Service</span><span class="v">Chair, NAHSL Professional Development Committee</span></li>
         <li><span class="k">Teaches</span><span class="v">Pharmacy Drug Information</span></li>
         <li><span class="k">Focus</span><span class="v">Knowledge management &amp; evidence literacy</span></li>
         <li><span class="k">Toolkit</span><span class="v">Obsidian, linked notes, plain text</span></li>
@@ -703,6 +804,40 @@ footer .wrap { display: flex; justify-content: space-between; gap: 1rem; flex-wr
   </div>
 </section>
 
+<section class="band" id="lights">
+  <div class="wrap">
+    <p class="section-label">Formula 1</p>
+    <h2>Five lights out.</h2>
+
+    <div class="gantry-wrap">
+      <div class="gantry" id="gantry" role="button" tabindex="0"
+           aria-describedby="gantryPrompt">
+        <div class="rail"></div>
+        <div class="lights" id="lights" aria-hidden="true">
+          <div class="col"><span class="bulb"></span><span class="bulb"></span></div>
+          <div class="col"><span class="bulb"></span><span class="bulb"></span></div>
+          <div class="col"><span class="bulb"></span><span class="bulb"></span></div>
+          <div class="col"><span class="bulb"></span><span class="bulb"></span></div>
+          <div class="col"><span class="bulb"></span><span class="bulb"></span></div>
+        </div>
+        <p class="readout" id="readout" role="status" aria-live="polite">&mdash;&mdash;&mdash;</p>
+        <p class="prompt" id="gantryPrompt">Click or press space to start</p>
+      </div>
+
+      <div class="reaction-copy">
+        <p>The lights come on one at a time. When all five go out, react &mdash; that is the whole sport compressed into about two tenths of a second.</p>
+        <p>It is also, Mike would point out, the same skill a reference interview asks for: you have prepared everything you can, and then the moment arrives on its own schedule.</p>
+        <ul class="scale">
+          <li><b>0.10 s</b><span>Below this the FIA calls it a jump start</span></li>
+          <li><b>0.20 s</b><span>A good grand prix getaway</span></li>
+          <li><b>0.25 s</b><span>Respectable for the rest of us</span></li>
+        </ul>
+        <p class="best" id="best"></p>
+      </div>
+    </div>
+  </div>
+</section>
+
 <section class="dark notes-bg" id="listen">
   <div class="wrap">
     <p class="section-label">Sound</p>
@@ -754,7 +889,7 @@ footer .wrap { display: flex; justify-content: space-between; gap: 1rem; flex-wr
       </div>
       <div class="line">
         <span class="k">Office</span>
-        <span class="v">D&rsquo;Amour Library, Room D 113</span>
+        <span class="v">D&rsquo;Amour Library, Room D127</span>
       </div>
       <div class="line">
         <span class="k">Campus</span>
@@ -1258,6 +1393,127 @@ footer .wrap { display: flex; justify-content: space-between; gap: 1rem; flex-wr
       return { peak: peak, rms: Math.sqrt(sum / d.length), seconds: buf.duration };
     });
   };
+}());
+</script>
+
+<script>
+(function () {
+  "use strict";
+
+  var gantry = document.getElementById("gantry");
+  var cols = document.querySelectorAll("#lights .col");
+  var readout = document.getElementById("readout");
+  var prompt = document.getElementById("gantryPrompt");
+  var bestOut = document.getElementById("best");
+  var KEY = "mm-reaction-best";
+
+  var state = "idle";      /* idle | sequencing | armed | live | done */
+  var timers = [];
+  var startedAt = 0;
+
+  function clearTimers() {
+    timers.forEach(clearTimeout);
+    timers = [];
+  }
+  function later(fn, ms) { timers.push(setTimeout(fn, ms)); }
+  function setLit(n) {
+    for (var i = 0; i < cols.length; i += 1) {
+      cols[i].classList.toggle("lit", i < n);
+    }
+  }
+  function readBest() {
+    try { return parseFloat(localStorage.getItem(KEY)) || 0; } catch (e) { return 0; }
+  }
+  function writeBest(ms) {
+    try { localStorage.setItem(KEY, String(ms)); } catch (e) { /* private mode */ }
+  }
+  function showBest() {
+    var b = readBest();
+    bestOut.textContent = b ? "Your best: " + (b / 1000).toFixed(3) + " s" : "";
+  }
+  showBest();
+
+  function reset(msg, sub) {
+    clearTimers();
+    setLit(0);
+    state = "idle";
+    readout.classList.remove("bad");
+    readout.textContent = msg;
+    prompt.textContent = sub;
+  }
+
+  function begin() {
+    clearTimers();
+    setLit(0);
+    state = "sequencing";
+    readout.classList.remove("bad");
+    readout.textContent = "———";
+    prompt.textContent = "Wait for it";
+
+    var i = 0;
+    function next() {
+      i += 1;
+      setLit(i);
+      if (i < 5) {
+        later(next, 1000);
+      } else {
+        state = "armed";
+        /* the unpredictable hold is the whole point */
+        later(function () {
+          setLit(0);
+          startedAt = performance.now();
+          state = "live";
+          prompt.textContent = "Now!";
+        }, 400 + Math.random() * 2400);
+      }
+    }
+    later(next, 700);
+  }
+
+  function react() {
+    var ms = Math.round(performance.now() - startedAt);
+    state = "done";
+    clearTimers();
+    readout.classList.remove("bad");
+    readout.textContent = (ms / 1000).toFixed(3) + " s";
+
+    var best = readBest();
+    if (!best || ms < best) {
+      writeBest(ms);
+      showBest();
+      prompt.textContent = "New personal best. Go again?";
+    } else if (ms < 250) {
+      prompt.textContent = "That would hold the position. Go again?";
+    } else {
+      prompt.textContent = "Go again?";
+    }
+  }
+
+  function jumpStart() {
+    clearTimers();
+    setLit(0);
+    state = "done";
+    readout.classList.add("bad");
+    readout.textContent = "Jump start";
+    prompt.textContent = "Five second penalty. Try again?";
+  }
+
+  function activate() {
+    if (state === "sequencing" || state === "armed") { jumpStart(); return; }
+    if (state === "live") { react(); return; }
+    begin();
+  }
+
+  gantry.addEventListener("mousedown", function (e) { e.preventDefault(); activate(); });
+  gantry.addEventListener("touchstart", function (e) { e.preventDefault(); activate(); }, { passive: false });
+  gantry.addEventListener("keydown", function (e) {
+    if (e.key === " " || e.key === "Enter" || e.key === "Spacebar") {
+      e.preventDefault();
+      activate();
+    }
+  });
+
+  reset("———", "Click or press space to start");
 }());
 </script>
 
