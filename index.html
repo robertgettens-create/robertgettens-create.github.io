@@ -302,6 +302,110 @@ h2 {
 .thread p { color: rgba(251, 247, 240, 0.82); }
 .thread p + p { margin-top: 1rem; }
 
+/* ---------- Musical decoration ---------- */
+.notes-bg::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='170' height='170'%3E%3Cg fill='none' stroke='%23F0B93C' stroke-width='1'%3E%3Cpath d='M0 22h170M0 30h170M0 38h170M0 46h170M0 54h170'/%3E%3Cpath d='M0 112h170M0 120h170M0 128h170M0 136h170M0 144h170'/%3E%3C/g%3E%3Cg fill='%23F0B93C'%3E%3Cellipse cx='42' cy='46' rx='6' ry='4.4' transform='rotate(-20 42 46)'/%3E%3Crect x='47' y='26' width='2' height='20'/%3E%3Cellipse cx='112' cy='38' rx='6' ry='4.4' transform='rotate(-20 112 38)'/%3E%3Crect x='117' y='18' width='2' height='20'/%3E%3Cellipse cx='74' cy='128' rx='6' ry='4.4' transform='rotate(-20 74 128)'/%3E%3Crect x='79' y='108' width='2' height='20'/%3E%3Cellipse cx='140' cy='136' rx='6' ry='4.4' transform='rotate(-20 140 136)'/%3E%3Crect x='145' y='116' width='2' height='20'/%3E%3C/g%3E%3C/svg%3E");
+  opacity: 0.055;
+  pointer-events: none;
+  z-index: 0;
+}
+.notes-bg > .wrap { position: relative; z-index: 1; }
+.hero-staff {
+  position: absolute;
+  right: -6%;
+  bottom: -14%;
+  width: 74%;
+  max-width: 900px;
+  opacity: 0.16;
+  pointer-events: none;
+  z-index: 0;
+}
+.hero-staff path { fill: none; stroke: var(--gold-lit); stroke-width: 1.6; }
+.hero-staff .nh { fill: var(--gold-lit); stroke: none; }
+.hero-staff .stem { stroke: var(--gold-lit); stroke-width: 2.4; }
+.hero-staff .beam { stroke: var(--gold-lit); stroke-width: 7; stroke-linecap: butt; }
+
+/* ---------- Score / listening panel ---------- */
+.score-panel {
+  position: relative;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(240, 185, 60, 0.28);
+  border-radius: 5px;
+  padding: 1.5rem;
+  margin-top: 2.2rem;
+}
+.score-scroll { overflow-x: auto; padding-bottom: 0.5rem; }
+#score { display: block; min-width: 760px; width: 100%; height: auto; }
+#score .staffline { stroke: rgba(251, 247, 240, 0.42); stroke-width: 1; }
+#score .barline   { stroke: rgba(251, 247, 240, 0.55); stroke-width: 1.4; }
+#score .glyph     { fill: rgba(251, 247, 240, 0.9); color: rgba(251, 247, 240, 0.9); }
+#score .glyph.open { fill: none; stroke: rgba(251, 247, 240, 0.9); stroke-width: 1.7; }
+#score .stem      { stroke: rgba(251, 247, 240, 0.9); stroke-width: 1.6; }
+#score .beam      { stroke: rgba(251, 247, 240, 0.9); stroke-width: 4.6; }
+#score .chordsym  { fill: var(--gold-lit); font-family: var(--sans); font-size: 15px; font-weight: 700; }
+#score .rest      { fill: rgba(251, 247, 240, 0.75); }
+#score .note.on .glyph { fill: var(--gold-lit); color: var(--gold-lit); }
+#score .note.on .glyph.open { fill: none; stroke: var(--gold-lit); }
+#score .note.on .stem, #score .note.on .beam { stroke: var(--gold-lit); }
+#score .note.on   { filter: drop-shadow(0 0 7px rgba(240, 185, 60, 0.85)); }
+#score .note      { transition: filter 0.12s; }
+
+.transport {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-top: 1.2rem;
+  flex-wrap: wrap;
+}
+.play-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.65rem;
+  background: var(--gold);
+  color: var(--navy-deep);
+  border: none;
+  border-radius: 100px;
+  font-family: var(--sans);
+  font-size: 0.82rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  padding: 0.72rem 1.5rem;
+  cursor: pointer;
+  transition: background 0.2s, transform 0.15s;
+}
+.play-btn:hover { background: var(--gold-lit); transform: translateY(-2px); }
+.play-btn svg { width: 14px; height: 14px; fill: var(--navy-deep); stroke: none; margin: 0; }
+.transport .meta {
+  font-size: 0.82rem;
+  color: rgba(251, 247, 240, 0.6);
+}
+.eq { display: inline-flex; align-items: flex-end; gap: 3px; height: 18px; }
+.eq i {
+  width: 3px;
+  height: 4px;
+  background: var(--gold-lit);
+  border-radius: 1px;
+  opacity: 0.35;
+}
+.playing .eq i { animation: bounce 0.9s ease-in-out infinite; opacity: 1; }
+.playing .eq i:nth-child(2) { animation-delay: 0.15s; }
+.playing .eq i:nth-child(3) { animation-delay: 0.3s; }
+.playing .eq i:nth-child(4) { animation-delay: 0.45s; }
+@keyframes bounce {
+  0%, 100% { height: 4px; }
+  50%      { height: 17px; }
+}
+.score-note {
+  margin-top: 1rem;
+  font-size: 0.82rem;
+  color: rgba(251, 247, 240, 0.52);
+  max-width: 70ch;
+}
+
 /* ---------- Contact ---------- */
 .contact-grid {
   display: grid;
@@ -384,12 +488,47 @@ footer .wrap { display: flex; justify-content: space-between; gap: 1rem; flex-wr
       <a href="#about">About</a>
       <a href="#research">Research</a>
       <a href="#interests">Interests</a>
+      <a href="#listen">Listen</a>
       <a href="#contact">Contact</a>
     </nav>
   </div>
 </header>
 
 <div class="hero">
+  <svg class="hero-staff" viewBox="0 0 1000 320" aria-hidden="true">
+    <path d="M0 96 C 250 58, 620 148, 1000 104"/>
+    <path d="M0 120 C 250 82, 620 172, 1000 128"/>
+    <path d="M0 144 C 250 106, 620 196, 1000 152"/>
+    <path d="M0 168 C 250 130, 620 220, 1000 176"/>
+    <path d="M0 192 C 250 154, 620 244, 1000 200"/>
+    <g>
+      <line class="stem" x1="196" y1="112" x2="196" y2="184"/>
+      <line class="stem" x1="238" y1="100" x2="238" y2="172"/>
+      <line class="stem" x1="280" y1="106" x2="280" y2="178"/>
+      <line class="beam" x1="196" y1="184" x2="280" y2="178"/>
+      <ellipse class="nh" cx="188" cy="112" rx="10" ry="7.4" transform="rotate(-20 188 112)"/>
+      <ellipse class="nh" cx="230" cy="100" rx="10" ry="7.4" transform="rotate(-20 230 100)"/>
+      <ellipse class="nh" cx="272" cy="106" rx="10" ry="7.4" transform="rotate(-20 272 106)"/>
+    </g>
+    <g>
+      <line class="stem" x1="470" y1="150" x2="470" y2="222"/>
+      <line class="stem" x1="512" y1="162" x2="512" y2="234"/>
+      <line class="beam" x1="470" y1="222" x2="512" y2="234"/>
+      <ellipse class="nh" cx="462" cy="150" rx="10" ry="7.4" transform="rotate(-20 462 150)"/>
+      <ellipse class="nh" cx="504" cy="162" rx="10" ry="7.4" transform="rotate(-20 504 162)"/>
+    </g>
+    <g>
+      <line class="stem" x1="700" y1="196" x2="700" y2="268"/>
+      <line class="stem" x1="742" y1="184" x2="742" y2="256"/>
+      <line class="stem" x1="784" y1="172" x2="784" y2="244"/>
+      <line class="stem" x1="826" y1="160" x2="826" y2="232"/>
+      <line class="beam" x1="700" y1="268" x2="826" y2="232"/>
+      <ellipse class="nh" cx="692" cy="196" rx="10" ry="7.4" transform="rotate(-20 692 196)"/>
+      <ellipse class="nh" cx="734" cy="184" rx="10" ry="7.4" transform="rotate(-20 734 184)"/>
+      <ellipse class="nh" cx="776" cy="172" rx="10" ry="7.4" transform="rotate(-20 776 172)"/>
+      <ellipse class="nh" cx="818" cy="160" rx="10" ry="7.4" transform="rotate(-20 818 160)"/>
+    </g>
+  </svg>
   <div class="wrap">
     <p class="eyebrow">College of Pharmacy Librarian</p>
     <h1>Mike Mannheim</h1>
@@ -452,7 +591,7 @@ footer .wrap { display: flex; justify-content: space-between; gap: 1rem; flex-wr
   </div>
 </section>
 
-<section class="dark" id="interests">
+<section class="dark notes-bg" id="interests">
   <div class="wrap">
     <p class="section-label">The Whole Person</p>
     <h2>Four interests, one way of thinking.</h2>
@@ -494,6 +633,29 @@ footer .wrap { display: flex; justify-content: space-between; gap: 1rem; flex-wr
         <p>The message Mike most wants students to take away has very little to do with databases. It is that a career and a life are not a zero-sum trade. You can be the person who knows the literature cold <em>and</em> the person with sawdust on their sleeves, who knows the pit-stop delta, who has opinions about Coltrane.</p>
         <p>The interests are not distractions from the work. They are where the instincts come from &mdash; patience, structure, attention, and the confidence to improvise once you actually know the material.</p>
       </div>
+    </div>
+  </div>
+</section>
+
+<section class="dark notes-bg" id="listen">
+  <div class="wrap">
+    <p class="section-label">Sound</p>
+    <h2>Eight bars, for the argument.</h2>
+    <p class="intro">A short modal phrase in C minor &mdash; written for this page and synthesized in your browser, in the spirit of the late-Coltrane quartet rather than borrowed from it. Learn the changes cold, then go somewhere with them.</p>
+
+    <div class="score-panel">
+      <div class="score-scroll">
+        <svg id="score" viewBox="0 0 960 190" role="img" aria-label="Lead sheet: an eight-bar modal phrase in C minor"></svg>
+      </div>
+      <div class="transport">
+        <button class="play-btn" id="playBtn" type="button" aria-live="polite">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 4.5v15l13-7.5z"/></svg>
+          <span id="playLabel">Play the phrase</span>
+        </button>
+        <span class="eq" aria-hidden="true"><i></i><i></i><i></i><i></i></span>
+        <span class="meta">Tenor lead, walking bass, brushed ride &middot; 138 BPM, swung</span>
+      </div>
+      <p class="score-note">Everything you hear is generated live from the notes drawn above &mdash; no audio file, no sample. Turn it up a little; the room helps.</p>
     </div>
   </div>
 </section>
@@ -543,6 +705,455 @@ footer .wrap { display: flex; justify-content: space-between; gap: 1rem; flex-wr
     <span>Springfield, Massachusetts</span>
   </div>
 </footer>
+
+<script>
+(function () {
+  "use strict";
+
+  /* ---------------------------------------------------------------
+     The phrase. One data structure drives both the engraving and
+     the synthesis, so the score you see is literally what plays.
+     Durations are in beats; "r" is a rest.
+  --------------------------------------------------------------- */
+  var BARS = [
+    { chord: "Cm7",    voicing: [63, 67, 70], bass: [36, 39, 43, 45],
+      notes: [["G4",1], ["Bb4",0.5], ["C5",0.5], ["Eb5",1], ["D5",1]] },
+    { chord: "Fm7",    voicing: [60, 63, 68], bass: [41, 43, 44, 45],
+      notes: [["C5",1], ["Ab4",0.5], ["Bb4",0.5], ["C5",2]] },
+    { chord: "Dm7b5",  voicing: [65, 68, 72], bass: [38, 41, 44, 45],
+      notes: [["F4",0.5], ["Ab4",0.5], ["Bb4",0.5], ["D5",0.5], ["C5",2]] },
+    { chord: "G7alt",  voicing: [59, 65, 68], bass: [43, 46, 50, 47],
+      notes: [["Ab4",0.5], ["B4",0.5], ["D5",0.5], ["F5",0.5], ["Eb5",1], ["D5",1]] },
+    { chord: "Cm7",    voicing: [63, 67, 70], bass: [36, 39, 43, 44],
+      notes: [["Eb5",1], ["G5",0.5], ["F5",0.5], ["Eb5",0.5], ["C5",0.5], ["Bb4",1]] },
+    { chord: "Abmaj7", voicing: [60, 63, 67], bass: [44, 48, 51, 48],
+      notes: [["C5",2], ["Bb4",0.5], ["Ab4",0.5], ["G4",1]] },
+    { chord: "Dm7b5",  voicing: [65, 68, 72], bass: [38, 41, 43, 46],
+      notes: [["F4",0.5], ["G4",0.5], ["Ab4",0.5], ["Bb4",0.5], ["B4",0.5], ["D5",0.5], ["F5",1]] },
+    { chord: "Cm7",    voicing: [63, 67, 70], bass: [36, 39, 43, 36],
+      notes: [["Eb5",2], ["r",2]] }
+  ];
+
+  var TEMPO = 138;
+  var SPB = 60 / TEMPO;             /* seconds per beat */
+  var LETTERS = "CDEFGAB";
+  var SEMIS = { C: 0, D: 2, E: 4, F: 5, G: 7, A: 9, B: 11 };
+  var KEY_FLATS = { B: true, E: true, A: true };   /* C minor: 3 flats */
+
+  function parsePitch(name) {
+    var letter = name.charAt(0);
+    var i = 1, acc = 0, accName = "";
+    while (name.charAt(i) === "b" || name.charAt(i) === "#") {
+      acc += name.charAt(i) === "b" ? -1 : 1;
+      accName += name.charAt(i);
+      i += 1;
+    }
+    var octave = parseInt(name.slice(i), 10);
+    return {
+      midi: (octave + 1) * 12 + SEMIS[letter] + acc,
+      /* diatonic staff index, C0 = 0 */
+      step: octave * 7 + LETTERS.indexOf(letter),
+      /* an accidental is only drawn when it contradicts the key signature */
+      needsNatural: acc === 0 && KEY_FLATS[letter] === true
+    };
+  }
+
+  /* Flatten to a timeline of events with absolute beat positions. */
+  var timeline = [];
+  (function buildTimeline() {
+    for (var b = 0; b < BARS.length; b += 1) {
+      var beat = 0;
+      var notes = BARS[b].notes;
+      for (var n = 0; n < notes.length; n += 1) {
+        timeline.push({
+          bar: b,
+          beatInBar: beat,
+          beat: b * 4 + beat,
+          dur: notes[n][1],
+          rest: notes[n][0] === "r",
+          pitch: notes[n][0] === "r" ? null : parsePitch(notes[n][0])
+        });
+        beat += notes[n][1];
+      }
+    }
+  }());
+
+  /* ---------------------------------------------------------------
+     Engraving
+  --------------------------------------------------------------- */
+  var SVG_NS = "http://www.w3.org/2000/svg";
+  var score = document.getElementById("score");
+  var X0 = 74, BAR_W = 108, GAP = 9;
+  var TOP_LINE = 78, BOTTOM_LINE = TOP_LINE + GAP * 4;   /* E4 */
+  var STEM_LEN = 27, NH_RX = 5.4, NH_RY = 4.0;
+
+  function el(tag, attrs) {
+    var node = document.createElementNS(SVG_NS, tag);
+    for (var k in attrs) {
+      if (Object.prototype.hasOwnProperty.call(attrs, k)) {
+        node.setAttribute(k, attrs[k]);
+      }
+    }
+    return node;
+  }
+  function yFor(step) { return BOTTOM_LINE - (step - 30) * (GAP / 2); }
+  function xFor(bar, beatInBar) { return X0 + bar * BAR_W + beatInBar * (BAR_W / 4) + 12; }
+
+  function drawFlat(x, y) {
+    var g = el("g", { class: "glyph" });
+    g.appendChild(el("path", {
+      d: "M" + x + " " + (y - 11) + " L" + x + " " + (y + 4),
+      stroke: "currentColor", "stroke-width": "1.3", fill: "none"
+    }));
+    g.appendChild(el("path", {
+      d: "M" + x + " " + (y - 1) + " C" + (x + 6) + " " + (y - 5) + ", " +
+         (x + 6.5) + " " + (y + 3) + ", " + x + " " + (y + 4) + " Z"
+    }));
+    return g;
+  }
+  function drawNatural(x, y) {
+    var g = el("g", {});
+    var s = { stroke: "currentColor", "stroke-width": "1.3", fill: "none" };
+    [["M" + x + " " + (y - 9) + "L" + x + " " + (y + 5)],
+     ["M" + (x + 5) + " " + (y - 5) + "L" + (x + 5) + " " + (y + 9)],
+     ["M" + x + " " + (y - 3) + "L" + (x + 5) + " " + (y - 5)],
+     ["M" + x + " " + (y + 3) + "L" + (x + 5) + " " + (y + 1)]].forEach(function (d) {
+      var p = el("path", s);
+      p.setAttribute("d", d[0]);
+      g.appendChild(p);
+    });
+    return g;
+  }
+
+  function renderScore() {
+    var i, x;
+    var totalW = X0 + BARS.length * BAR_W + 8;
+    score.setAttribute("viewBox", "0 0 " + totalW + " 190");
+
+    /* staff */
+    for (i = 0; i < 5; i += 1) {
+      score.appendChild(el("line", {
+        class: "staffline", x1: 18, y1: TOP_LINE + i * GAP,
+        x2: totalW - 10, y2: TOP_LINE + i * GAP
+      }));
+    }
+
+    /* key signature: B flat, E flat, A flat */
+    var sigSteps = [34, 37, 33];
+    var sig = el("g", { class: "glyph", color: "rgba(251,247,240,0.85)" });
+    for (i = 0; i < sigSteps.length; i += 1) {
+      sig.appendChild(drawFlat(30 + i * 12, yFor(sigSteps[i])));
+    }
+    score.appendChild(sig);
+
+    /* barlines + chord symbols */
+    for (i = 0; i <= BARS.length; i += 1) {
+      x = X0 + i * BAR_W;
+      score.appendChild(el("line", {
+        class: "barline", x1: x, y1: TOP_LINE, x2: x, y2: BOTTOM_LINE
+      }));
+      if (i < BARS.length) {
+        var sym = el("text", { class: "chordsym", x: x + 6, y: TOP_LINE - 16 });
+        sym.textContent = BARS[i].chord;
+        score.appendChild(sym);
+      }
+    }
+    /* final double bar */
+    score.appendChild(el("line", {
+      class: "barline", x1: X0 + BARS.length * BAR_W + 4, y1: TOP_LINE,
+      x2: X0 + BARS.length * BAR_W + 4, y2: BOTTOM_LINE, "stroke-width": 3.4
+    }));
+
+    /* notes */
+    var beamRun = [];
+    function flushBeam() {
+      if (beamRun.length > 1) {
+        var bottom = 0;
+        beamRun.forEach(function (ev) { bottom = Math.max(bottom, ev._stemBottom); });
+        beamRun.forEach(function (ev) { ev._stemEl.setAttribute("y2", bottom); });
+        var beam = el("line", {
+          class: "beam",
+          x1: beamRun[0]._stemX, y1: bottom,
+          x2: beamRun[beamRun.length - 1]._stemX, y2: bottom
+        });
+        beamRun[0]._group.parentNode.appendChild(beam);
+        beamRun[0]._beam = beam;
+      } else if (beamRun.length === 1) {
+        /* lone eighth gets a flag */
+        var ev1 = beamRun[0];
+        var flag = el("path", {
+          class: "stem", fill: "none",
+          d: "M" + ev1._stemX + " " + ev1._stemBottom +
+             " c -1 -6, 6 -7, 5 -14"
+        });
+        ev1._group.appendChild(flag);
+      }
+      beamRun = [];
+    }
+
+    for (i = 0; i < timeline.length; i += 1) {
+      var ev = timeline[i];
+      x = xFor(ev.bar, ev.beatInBar);
+      var g = el("g", { class: "note" });
+      ev._group = g;
+
+      if (ev.rest) {
+        flushBeam();
+        g.appendChild(el("rect", {
+          class: "rest", x: x - 6, y: TOP_LINE + GAP * 2 - 5, width: 13, height: 5
+        }));
+        score.appendChild(g);
+        timeline[i]._el = g;
+        continue;
+      }
+
+      var y = yFor(ev.pitch.step);
+      var filled = ev.dur < 2;
+
+      if (ev.pitch.needsNatural) {
+        var nat = el("g", { class: "glyph", color: "rgba(251,247,240,0.9)" });
+        nat.appendChild(drawNatural(x - 17, y));
+        g.appendChild(nat);
+      }
+
+      g.appendChild(el("ellipse", {
+        class: filled ? "glyph" : "glyph open",
+        cx: x, cy: y, rx: NH_RX, ry: NH_RY,
+        transform: "rotate(-18 " + x + " " + y + ")"
+      }));
+
+      var stemX = x - NH_RX + 0.6;
+      var stemBottom = y + STEM_LEN;
+      var stem = el("line", {
+        class: "stem", x1: stemX, y1: y + 1, x2: stemX, y2: stemBottom
+      });
+      g.appendChild(stem);
+      ev._stemEl = stem;
+      ev._stemX = stemX;
+      ev._stemBottom = stemBottom;
+
+      score.appendChild(g);
+      timeline[i]._el = g;
+
+      if (ev.dur === 0.5) {
+        beamRun.push(ev);
+        if (beamRun.length === 4) { flushBeam(); }
+      } else {
+        flushBeam();
+      }
+    }
+    flushBeam();
+  }
+  renderScore();
+
+  /* ---------------------------------------------------------------
+     Synthesis
+  --------------------------------------------------------------- */
+  var btn = document.getElementById("playBtn");
+  var label = document.getElementById("playLabel");
+  var panel = document.querySelector(".score-panel");
+  var ctx = null, master = null, noise = null;
+  var nodes = [], playing = false, startAt = 0, rafId = 0, endTimer = 0;
+
+  function swing(beat) {
+    var whole = Math.floor(beat);
+    var frac = beat - whole;
+    if (Math.abs(frac - 0.5) < 0.001) { frac = 2 / 3; }
+    return (whole + frac) * SPB;
+  }
+  function hz(midi) { return 440 * Math.pow(2, (midi - 69) / 12); }
+
+  function makeNoise() {
+    var len = Math.floor(ctx.sampleRate * 1.5);
+    var buf = ctx.createBuffer(1, len, ctx.sampleRate);
+    var data = buf.getChannelData(0);
+    for (var i = 0; i < len; i += 1) { data[i] = Math.random() * 2 - 1; }
+    return buf;
+  }
+  function track(node) { nodes.push(node); return node; }
+
+  /* Tenor-ish lead: two detuned saws through a swept lowpass, with a
+     late-arriving vibrato so long notes bloom the way a horn does. */
+  function sax(midi, t, dur) {
+    var f = hz(midi);
+    var g = ctx.createGain();
+    var filt = ctx.createBiquadFilter();
+    filt.type = "lowpass";
+    filt.Q.value = 5;
+    filt.frequency.setValueAtTime(f * 1.6, t);
+    filt.frequency.linearRampToValueAtTime(f * 5.5, t + 0.07);
+    filt.frequency.exponentialRampToValueAtTime(Math.max(f * 2.2, 220), t + dur);
+
+    g.gain.setValueAtTime(0.0001, t);
+    g.gain.exponentialRampToValueAtTime(0.24, t + 0.035);
+    g.gain.exponentialRampToValueAtTime(0.17, t + Math.min(0.25, dur * 0.6));
+    g.gain.exponentialRampToValueAtTime(0.0001, t + dur + 0.09);
+
+    filt.connect(g);
+    g.connect(master);
+
+    var lfo = track(ctx.createOscillator());
+    var lfoGain = ctx.createGain();
+    lfo.frequency.value = 5.4;
+    lfoGain.gain.setValueAtTime(0, t);
+    lfoGain.gain.setValueAtTime(0, t + 0.13);
+    lfoGain.gain.linearRampToValueAtTime(7, t + Math.max(0.2, dur * 0.5));
+    lfo.connect(lfoGain);
+
+    [0, 6, -7].forEach(function (detune, i) {
+      var o = track(ctx.createOscillator());
+      o.type = i === 2 ? "triangle" : "sawtooth";
+      o.frequency.value = f;
+      o.detune.value = detune;
+      lfoGain.connect(o.detune);
+      var og = ctx.createGain();
+      og.gain.value = i === 2 ? 0.5 : 0.42;
+      o.connect(og);
+      og.connect(filt);
+      o.start(t);
+      o.stop(t + dur + 0.15);
+    });
+    lfo.start(t);
+    lfo.stop(t + dur + 0.15);
+  }
+
+  function bass(midi, t) {
+    var o = track(ctx.createOscillator());
+    var g = ctx.createGain();
+    var filt = ctx.createBiquadFilter();
+    filt.type = "lowpass";
+    filt.frequency.value = 520;
+    o.type = "triangle";
+    o.frequency.setValueAtTime(hz(midi) * 1.01, t);
+    o.frequency.exponentialRampToValueAtTime(hz(midi), t + 0.05);
+    g.gain.setValueAtTime(0.0001, t);
+    g.gain.exponentialRampToValueAtTime(0.42, t + 0.02);
+    g.gain.exponentialRampToValueAtTime(0.0001, t + SPB * 0.92);
+    o.connect(filt); filt.connect(g); g.connect(master);
+    o.start(t);
+    o.stop(t + SPB);
+  }
+
+  function ride(t, accent) {
+    var src = track(ctx.createBufferSource());
+    src.buffer = noise;
+    var bp = ctx.createBiquadFilter();
+    bp.type = "bandpass";
+    bp.frequency.value = 7600;
+    bp.Q.value = 0.8;
+    var hp = ctx.createBiquadFilter();
+    hp.type = "highpass";
+    hp.frequency.value = 4200;
+    var g = ctx.createGain();
+    var peak = accent ? 0.075 : 0.042;
+    g.gain.setValueAtTime(0.0001, t);
+    g.gain.exponentialRampToValueAtTime(peak, t + 0.005);
+    g.gain.exponentialRampToValueAtTime(0.0001, t + (accent ? 0.34 : 0.18));
+    src.connect(bp); bp.connect(hp); hp.connect(g); g.connect(master);
+    src.start(t);
+    src.stop(t + 0.4);
+  }
+
+  function comp(voicing, t) {
+    voicing.forEach(function (midi) {
+      var o = track(ctx.createOscillator());
+      var g = ctx.createGain();
+      o.type = "triangle";
+      o.frequency.value = hz(midi);
+      g.gain.setValueAtTime(0.0001, t);
+      g.gain.exponentialRampToValueAtTime(0.05, t + 0.012);
+      g.gain.exponentialRampToValueAtTime(0.0001, t + 0.55);
+      o.connect(g); g.connect(master);
+      o.start(t);
+      o.stop(t + 0.6);
+    });
+  }
+
+  function schedule() {
+    var base = ctx.currentTime + 0.25;
+    startAt = base;
+    var b, i;
+
+    for (b = 0; b < BARS.length; b += 1) {
+      for (i = 0; i < 4; i += 1) {
+        var beat = b * 4 + i;
+        bass(BARS[b].bass[i], base + swing(beat));
+        ride(base + swing(beat), i === 0 || i === 2);
+        if (i === 1 || i === 3) { ride(base + swing(beat + 0.5), false); }
+      }
+      comp(BARS[b].voicing, base + swing(b * 4 + 1.5));
+      if (b % 2 === 1) { comp(BARS[b].voicing, base + swing(b * 4 + 3.5)); }
+    }
+
+    for (i = 0; i < timeline.length; i += 1) {
+      var ev = timeline[i];
+      if (ev.rest) { continue; }
+      var t = base + swing(ev.beat);
+      var dur = base + swing(ev.beat + ev.dur) - t;
+      sax(ev.pitch.midi, t, dur * 0.94);
+    }
+
+    return base + swing(BARS.length * 4) + 0.6;
+  }
+
+  function clearHighlight() {
+    for (var i = 0; i < timeline.length; i += 1) {
+      if (timeline[i]._el) { timeline[i]._el.classList.remove("on"); }
+    }
+  }
+
+  function follow() {
+    if (!playing) { return; }
+    var elapsed = ctx.currentTime - startAt;
+    for (var i = 0; i < timeline.length; i += 1) {
+      var ev = timeline[i];
+      if (!ev._el) { continue; }
+      var s = swing(ev.beat);
+      var e = swing(ev.beat + ev.dur);
+      var on = !ev.rest && elapsed >= s && elapsed < e;
+      ev._el.classList.toggle("on", on);
+    }
+    rafId = requestAnimationFrame(follow);
+  }
+
+  function stop() {
+    playing = false;
+    cancelAnimationFrame(rafId);
+    clearTimeout(endTimer);
+    nodes.forEach(function (n) { try { n.stop(); } catch (err) { /* already stopped */ } });
+    nodes = [];
+    clearHighlight();
+    panel.classList.remove("playing");
+    label.textContent = "Play the phrase";
+  }
+
+  btn.addEventListener("click", function () {
+    if (playing) { stop(); return; }
+    if (!ctx) {
+      var AC = window.AudioContext || window.webkitAudioContext;
+      if (!AC) { label.textContent = "Audio not supported"; return; }
+      ctx = new AC();
+      master = ctx.createGain();
+      master.gain.value = 0.7;
+      var lim = ctx.createDynamicsCompressor();
+      lim.threshold.value = -10;
+      lim.ratio.value = 12;
+      master.connect(lim);
+      lim.connect(ctx.destination);
+      noise = makeNoise();
+    }
+    if (ctx.state === "suspended") { ctx.resume(); }
+
+    nodes = [];
+    var endsAt = schedule();
+    playing = true;
+    panel.classList.add("playing");
+    label.textContent = "Stop";
+    follow();
+    endTimer = setTimeout(stop, (endsAt - ctx.currentTime) * 1000);
+  });
+}());
+</script>
 
 </body>
 </html>
