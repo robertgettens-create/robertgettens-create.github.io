@@ -100,6 +100,61 @@ body {
   z-index: 1;
   padding: clamp(3.5rem, 9vw, 6.5rem) 0 clamp(3rem, 7vw, 5rem);
 }
+.hero-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: clamp(2rem, 5vw, 4rem);
+  align-items: center;
+}
+
+/* Portrait frame. Drop an <img> in place of the monogram when a
+   headshot is available; the frame is already sized for it. */
+.portrait {
+  width: clamp(170px, 24vw, 236px);
+  margin: 0;
+  text-align: center;
+}
+.portrait .frame {
+  position: relative;
+  aspect-ratio: 4 / 5;
+  border: 1px solid rgba(240, 185, 60, 0.45);
+  border-radius: 4px;
+  background:
+    linear-gradient(150deg, rgba(255, 255, 255, 0.10), rgba(255, 255, 255, 0.03));
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+  box-shadow: 0 18px 40px rgba(3, 10, 22, 0.35);
+}
+.portrait .frame::after {
+  content: "";
+  position: absolute;
+  inset: 7px;
+  border: 1px solid rgba(240, 185, 60, 0.28);
+  border-radius: 2px;
+  pointer-events: none;
+}
+.portrait img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.portrait .monogram {
+  font-family: var(--serif);
+  font-size: clamp(2.4rem, 6vw, 3.4rem);
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  color: var(--gold-lit);
+  line-height: 1;
+}
+.portrait figcaption {
+  margin-top: 0.7rem;
+  font-size: 0.66rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: rgba(251, 247, 240, 0.4);
+}
+
+@media (max-width: 780px) {
+  .hero-grid { grid-template-columns: 1fr; justify-items: start; }
+  .portrait { order: -1; }
+}
 .eyebrow {
   font-size: 0.76rem;
   letter-spacing: 0.24em;
@@ -530,10 +585,20 @@ footer .wrap { display: flex; justify-content: space-between; gap: 1rem; flex-wr
     </g>
   </svg>
   <div class="wrap">
-    <p class="eyebrow">College of Pharmacy Librarian</p>
-    <h1>Mike Mannheim</h1>
-    <p class="role">Librarian for the College of Pharmacy at Western New England University, and instructor in the pharmacy drug information course.</p>
-    <p class="thesis">You really can have all of it &mdash; the work, the craft, the race, and the record.</p>
+    <div class="hero-grid">
+      <div class="hero-text">
+        <p class="eyebrow">Health Sciences Librarian</p>
+        <h1>Mike Mannheim</h1>
+        <p class="role">Librarian for the College of Pharmacy &amp; Health Sciences at Western New England University, and instructor in the pharmacy drug information course.</p>
+        <p class="thesis">You really can have all of it &mdash; the work, the craft, the race, and the record.</p>
+      </div>
+
+      <!-- Swap the .monogram span for <img src="mike-mannheim.jpg" alt="Mike Mannheim"> when a headshot is available. -->
+      <figure class="portrait">
+        <div class="frame"><span class="monogram">MM</span></div>
+        <figcaption>D&rsquo;Amour Library</figcaption>
+      </figure>
+    </div>
   </div>
 </div>
 
@@ -550,7 +615,8 @@ footer .wrap { display: flex; justify-content: space-between; gap: 1rem; flex-wr
     <aside class="card">
       <h3>At a glance</h3>
       <ul class="factlist">
-        <li><span class="k">Role</span><span class="v">Librarian, College of Pharmacy</span></li>
+        <li><span class="k">Role</span><span class="v">Health Sciences Librarian, College of Pharmacy &amp; Health Sciences</span></li>
+        <li><span class="k">At WNE</span><span class="v">Since 2017</span></li>
         <li><span class="k">Teaches</span><span class="v">Pharmacy Drug Information</span></li>
         <li><span class="k">Focus</span><span class="v">Knowledge management &amp; evidence literacy</span></li>
         <li><span class="k">Toolkit</span><span class="v">Obsidian, linked notes, plain text</span></li>
@@ -676,15 +742,19 @@ footer .wrap { display: flex; justify-content: space-between; gap: 1rem; flex-wr
       </div>
     </div>
 
-    <!-- Contact details below are placeholders pending confirmation from Mike. -->
+    <!-- Contact details verified against wne.edu and library.wne.edu, Sept 2026. -->
     <aside class="card contact-card">
       <div class="line">
         <span class="k">Email</span>
-        <span class="v"><a href="mailto:michael.mannheim@wne.edu">michael.mannheim@wne.edu</a></span>
+        <span class="v"><a href="mailto:mike.mannheim@wne.edu">mike.mannheim@wne.edu</a></span>
+      </div>
+      <div class="line">
+        <span class="k">Phone</span>
+        <span class="v"><a href="tel:+14137821534">(413) 782-1534</a></span>
       </div>
       <div class="line">
         <span class="k">Office</span>
-        <span class="v">D&rsquo;Amour Library, Western New England University</span>
+        <span class="v">D&rsquo;Amour Library, Room D 113</span>
       </div>
       <div class="line">
         <span class="k">Campus</span>
@@ -694,7 +764,7 @@ footer .wrap { display: flex; justify-content: space-between; gap: 1rem; flex-wr
         <span class="k">Availability</span>
         <span class="v">Research consultations by appointment</span>
       </div>
-      <a class="btn" href="mailto:michael.mannheim@wne.edu">Send an email</a>
+      <a class="btn" href="mailto:mike.mannheim@wne.edu">Send an email</a>
     </aside>
   </div>
 </section>
