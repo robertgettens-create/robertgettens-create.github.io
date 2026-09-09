@@ -1127,6 +1127,16 @@ footer .wrap { display: flex; justify-content: space-between; gap: 1rem; flex-wr
     label.textContent = "Play the phrase";
   }
 
+  function start() {
+    nodes = [];
+    var endsAt = schedule();
+    playing = true;
+    panel.classList.add("playing");
+    label.textContent = "Stop";
+    follow();
+    endTimer = setTimeout(stop, (endsAt - ctx.currentTime) * 1000);
+  }
+
   btn.addEventListener("click", function () {
     if (playing) { stop(); return; }
     if (!ctx) {
@@ -1142,16 +1152,42 @@ footer .wrap { display: flex; justify-content: space-between; gap: 1rem; flex-wr
       lim.connect(ctx.destination);
       noise = makeNoise();
     }
-    if (ctx.state === "suspended") { ctx.resume(); }
-
-    nodes = [];
-    var endsAt = schedule();
-    playing = true;
-    panel.classList.add("playing");
-    label.textContent = "Stop";
-    follow();
-    endTimer = setTimeout(stop, (endsAt - ctx.currentTime) * 1000);
+    /* resume() is async: schedule only once the clock is actually running,
+       or every note lands in the past and the phrase plays as one chord. */
+    if (ctx.state !== "running") {
+      label.textContent = "Starting...";
+      ctx.resume().then(start, function () {
+        label.textContent = "Tap again to play";
+      });
+    } else {
+      start();
+    }
   });
+
+  /* Renders the same schedule offline so the synthesis can be checked
+     without speakers: returns peak and RMS of the mix. */
+  window.__phraseSelfTest = function () {
+    var OAC = window.OfflineAudioContext || window.webkitOfflineAudioContext;
+    var savedCtx = ctx, savedMaster = master, savedNoise = noise, savedNodes = nodes;
+    var off = new OAC(1, 44100 * 16, 44100);
+    ctx = off;
+    master = off.createGain();
+    master.gain.value = 0.7;
+    master.connect(off.destination);
+    noise = makeNoise();
+    nodes = [];
+    schedule();
+    return off.startRendering().then(function (buf) {
+      var d = buf.getChannelData(0), peak = 0, sum = 0, i;
+      for (i = 0; i < d.length; i += 1) {
+        var v = d[i] < 0 ? -d[i] : d[i];
+        if (v > peak) { peak = v; }
+        sum += d[i] * d[i];
+      }
+      ctx = savedCtx; master = savedMaster; noise = savedNoise; nodes = savedNodes;
+      return { peak: peak, rms: Math.sqrt(sum / d.length), seconds: buf.duration };
+    });
+  };
 }());
 </script>
 
