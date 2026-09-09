@@ -3,156 +3,266 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Wait For It</title>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Source+Sans+3:wght@300;400;800&display=swap">
+<title>Mike Mannheim &middot; Pharmacy Librarian, Western New England University</title>
+<meta name="description" content="Mike Mannheim is the College of Pharmacy librarian at Western New England University - teaching drug information, building knowledge systems, and proving you can have all of your interests at once.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Source+Sans+3:wght@300;400;600;700&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600;8..60,700&display=swap">
 <style>
+:root {
+  --navy:      #10284A;
+  --navy-deep: #0A1B33;
+  --gold:      #C8952A;
+  --gold-lit:  #F0B93C;
+  --cream:     #FBF7F0;
+  --paper:     #FFFFFF;
+  --ink:       #24303F;
+  --ink-soft:  #5A6675;
+  --rule:      #E4DACA;
+  --serif: "Source Serif 4", Georgia, "Times New Roman", serif;
+  --sans:  "Source Sans 3", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+}
+
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-html, body {
-  height: 100%;
-  background: #000B1E;
-  color: #fff;
-  font-family: 'Source Sans 3', system-ui, sans-serif;
-  overflow: hidden;
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--cream);
+  color: var(--ink);
+  font-family: var(--sans);
+  font-size: 17px;
+  line-height: 1.7;
   -webkit-font-smoothing: antialiased;
 }
 
-/* Grain texture overlay */
-body::before {
-  content: '';
-  position: fixed;
-  inset: 0;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)' opacity='0.045'/%3E%3C/svg%3E");
-  pointer-events: none;
-  z-index: 1;
+.wrap {
+  width: min(1080px, 100% - 3rem);
+  margin-inline: auto;
 }
 
-.stage {
-  position: relative;
-  height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
-  z-index: 2;
-  padding: 2rem;
+/* ---------- Header ---------- */
+.topbar {
+  background: var(--navy-deep);
+  border-bottom: 3px solid var(--gold);
 }
-
-/* Pulse rings */
-.rings {
-  position: absolute;
-  inset: 0;
+.topbar .wrap {
   display: flex;
   align-items: center;
-  justify-content: center;
-  pointer-events: none;
-}
-.ring {
-  position: absolute;
-  width: 320px;
-  height: 320px;
-  border-radius: 50%;
-  border: 1.5px solid rgba(255, 184, 28, 0.22);
-  animation: pulse 3.6s ease-out infinite;
-}
-.ring:nth-child(2) { animation-delay: 1.2s; }
-.ring:nth-child(3) { animation-delay: 2.4s; }
-
-@keyframes pulse {
-  0%   { transform: scale(0.3); opacity: 0.7; }
-  100% { transform: scale(2.8); opacity: 0; }
-}
-
-/* Content */
-.content {
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+  justify-content: space-between;
   gap: 1rem;
+  padding: 0.85rem 0;
+  flex-wrap: wrap;
 }
-
-.eyebrow {
-  font-size: clamp(0.65rem, 2vw, 0.8rem);
-  font-weight: 400;
-  letter-spacing: 0.35em;
-  text-transform: uppercase;
-  color: rgba(255, 255, 255, 0.38);
+.mark {
+  font-family: var(--serif);
+  font-size: 0.95rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  color: var(--cream);
 }
-
-.headline {
-  font-size: clamp(3rem, 12vw, 8rem);
-  font-weight: 800;
-  letter-spacing: 0.04em;
-  text-transform: uppercase;
-  line-height: 0.95;
-  color: #FFB81C;
-  text-shadow:
-    0 0 80px rgba(255, 184, 28, 0.25),
-    0 0 160px rgba(255, 184, 28, 0.1);
-  text-wrap: balance;
-}
-
-.cursor-row {
+.mark span { color: var(--gold-lit); }
+.nav {
   display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  margin-top: 0.5rem;
-}
-.cursor-dot {
-  width: 10px;
-  height: 10px;
-  border-radius: 50%;
-  background: #FFB81C;
-  animation: blink 1.1s step-start infinite;
-}
-@keyframes blink {
-  0%, 100% { opacity: 1; }
-  50%       { opacity: 0; }
-}
-.cursor-label {
-  font-size: clamp(0.7rem, 2vw, 0.82rem);
-  font-weight: 300;
-  letter-spacing: 0.2em;
+  gap: 1.5rem;
+  font-size: 0.78rem;
+  letter-spacing: 0.14em;
   text-transform: uppercase;
-  color: rgba(255, 255, 255, 0.28);
+  font-weight: 600;
+}
+.nav a {
+  color: rgba(251, 247, 240, 0.62);
+  text-decoration: none;
+  padding-bottom: 2px;
+  border-bottom: 2px solid transparent;
+  transition: color 0.2s, border-color 0.2s;
+}
+.nav a:hover { color: var(--gold-lit); border-bottom-color: var(--gold); }
+
+/* ---------- Hero ---------- */
+.hero {
+  position: relative;
+  background:
+    radial-gradient(ellipse 80% 120% at 78% 0%, rgba(200, 149, 42, 0.20), transparent 62%),
+    linear-gradient(160deg, var(--navy) 0%, var(--navy-deep) 100%);
+  color: var(--cream);
+  overflow: hidden;
+}
+.hero::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)' opacity='0.05'/%3E%3C/svg%3E");
+  pointer-events: none;
+}
+.hero .wrap {
+  position: relative;
+  z-index: 1;
+  padding: clamp(3.5rem, 9vw, 6.5rem) 0 clamp(3rem, 7vw, 5rem);
+}
+.eyebrow {
+  font-size: 0.76rem;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  font-weight: 600;
+  color: var(--gold-lit);
+  margin-bottom: 1.1rem;
+}
+.hero h1 {
+  font-family: var(--serif);
+  font-weight: 700;
+  font-size: clamp(2.7rem, 7.5vw, 4.6rem);
+  line-height: 1.02;
+  letter-spacing: -0.015em;
+  margin-bottom: 0.9rem;
+}
+.hero .role {
+  font-size: clamp(1.05rem, 2.4vw, 1.3rem);
+  font-weight: 300;
+  color: rgba(251, 247, 240, 0.82);
+  max-width: 46ch;
+}
+.hero .thesis {
+  margin-top: 2.2rem;
+  padding-left: 1.4rem;
+  border-left: 3px solid var(--gold);
+  font-family: var(--serif);
+  font-size: clamp(1.15rem, 2.8vw, 1.5rem);
+  font-style: italic;
+  line-height: 1.5;
+  color: #fff;
+  max-width: 34ch;
 }
 
-/* Bottom mark */
-.bottom-mark {
-  position: fixed;
-  bottom: 1.75rem;
-  left: 0; right: 0;
-  text-align: center;
-  font-size: 0.62rem;
-  letter-spacing: 0.18em;
+/* ---------- Sections ---------- */
+section { padding: clamp(3rem, 7vw, 5rem) 0; }
+.section-label {
+  font-size: 0.74rem;
+  letter-spacing: 0.22em;
   text-transform: uppercase;
-  color: rgba(255, 255, 255, 0.14);
-  z-index: 2;
+  font-weight: 700;
+  color: var(--gold);
+  margin-bottom: 0.75rem;
+}
+h2 {
+  font-family: var(--serif);
+  font-weight: 600;
+  font-size: clamp(1.7rem, 4vw, 2.3rem);
+  line-height: 1.2;
+  color: var(--navy);
+  margin-bottom: 1.5rem;
+  letter-spacing: -0.01em;
+}
+.bio-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.55fr) minmax(0, 1fr);
+  gap: clamp(2rem, 5vw, 4rem);
+  align-items: start;
+}
+.bio p + p { margin-top: 1.1rem; }
+.bio p { color: var(--ink); max-width: 62ch; }
+.lead { font-size: 1.12rem; }
+
+.card {
+  background: var(--paper);
+  border: 1px solid var(--rule);
+  border-top: 4px solid var(--gold);
+  border-radius: 3px;
+  padding: 1.6rem 1.7rem;
+  box-shadow: 0 1px 2px rgba(16, 40, 74, 0.04), 0 8px 24px rgba(16, 40, 74, 0.05);
+}
+.card h3 {
+  font-family: var(--serif);
+  font-size: 1.05rem;
+  font-weight: 600;
+  color: var(--navy);
+  margin-bottom: 1rem;
+}
+.factlist { list-style: none; font-size: 0.94rem; }
+.factlist li {
+  padding: 0.6rem 0;
+  border-bottom: 1px solid var(--rule);
+  display: grid;
+  grid-template-columns: 5.5rem 1fr;
+  gap: 0.75rem;
+}
+.factlist li:last-child { border-bottom: none; padding-bottom: 0; }
+.factlist .k {
+  font-size: 0.7rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  font-weight: 700;
+  color: var(--ink-soft);
+  padding-top: 0.22em;
+}
+.factlist .v { color: var(--ink); }
+
+footer {
+  background: var(--navy-deep);
+  color: rgba(251, 247, 240, 0.5);
+  font-size: 0.8rem;
+  padding: 2rem 0;
+  border-top: 3px solid var(--gold);
+}
+footer .wrap { display: flex; justify-content: space-between; gap: 1rem; flex-wrap: wrap; }
+
+@media (max-width: 780px) {
+  .bio-grid { grid-template-columns: 1fr; }
+  .nav { gap: 1rem; }
 }
 </style>
 </head>
 <body>
 
-<div class="stage">
-  <div class="rings">
-    <div class="ring"></div>
-    <div class="ring"></div>
-    <div class="ring"></div>
+<header class="topbar">
+  <div class="wrap">
+    <div class="mark">Mike Mannheim<span> &middot; </span>Western New England University</div>
+    <nav class="nav">
+      <a href="#about">About</a>
+      <a href="#interests">Interests</a>
+      <a href="#contact">Contact</a>
+    </nav>
   </div>
+</header>
 
-  <div class="content">
-    <p class="eyebrow">Under construction</p>
-    <h1 class="headline">Wait<br>For It.</h1>
-    <div class="cursor-row">
-      <div class="cursor-dot"></div>
-      <span class="cursor-label">Something is coming</span>
-    </div>
+<div class="hero">
+  <div class="wrap">
+    <p class="eyebrow">College of Pharmacy Librarian</p>
+    <h1>Mike Mannheim</h1>
+    <p class="role">Librarian for the College of Pharmacy at Western New England University, and instructor in the pharmacy drug information course.</p>
+    <p class="thesis">You really can have all of it &mdash; the work, the craft, the race, and the record.</p>
   </div>
 </div>
 
-<p class="bottom-mark">robertgettens-create.github.io</p>
+<section id="about">
+  <div class="wrap bio-grid">
+    <div class="bio">
+      <p class="section-label">About</p>
+      <h2>A librarian who teaches, builds, and keeps track.</h2>
+      <p class="lead">Mike Mannheim is the librarian for the College of Pharmacy at Western New England University, where he works alongside student pharmacists from their first literature search to their last capstone citation.</p>
+      <p>The best part of the job, he&rsquo;ll tell you, is the students. Teaching in the pharmacy drug information course means being in the room for the moment a question stops being an assignment and starts being a real clinical problem &mdash; where the evidence is thin, the sources disagree, and someone has to decide what the literature actually supports.</p>
+      <p>That&rsquo;s the skill he is after: not finding an answer, but knowing how to build one, defend it, and find your way back to it a year later.</p>
+    </div>
+
+    <aside class="card">
+      <h3>At a glance</h3>
+      <ul class="factlist">
+        <li><span class="k">Role</span><span class="v">Librarian, College of Pharmacy</span></li>
+        <li><span class="k">Teaches</span><span class="v">Pharmacy Drug Information</span></li>
+        <li><span class="k">Focus</span><span class="v">Knowledge management &amp; evidence literacy</span></li>
+        <li><span class="k">Toolkit</span><span class="v">Obsidian, linked notes, plain text</span></li>
+        <li><span class="k">Off hours</span><span class="v">Woodworking, Formula 1, jazz</span></li>
+      </ul>
+    </aside>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <span>Mike Mannheim &middot; Western New England University</span>
+    <span>Springfield, Massachusetts</span>
+  </div>
+</footer>
 
 </body>
 </html>
