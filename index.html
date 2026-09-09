@@ -234,6 +234,74 @@ h2 {
 }
 .ri p { font-size: 0.95rem; color: var(--ink-soft); }
 
+/* ---------- Interests (dark band) ---------- */
+.dark {
+  position: relative;
+  background:
+    radial-gradient(ellipse 70% 100% at 20% 0%, rgba(200, 149, 42, 0.16), transparent 60%),
+    linear-gradient(200deg, var(--navy) 0%, var(--navy-deep) 100%);
+  color: var(--cream);
+  overflow: hidden;
+}
+.dark .section-label { color: var(--gold-lit); }
+.dark h2 { color: #fff; }
+.dark .intro { color: rgba(251, 247, 240, 0.72); }
+
+.int-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(238px, 1fr));
+  gap: 1.25rem;
+  margin-bottom: 3rem;
+}
+.int {
+  background: rgba(255, 255, 255, 0.045);
+  border: 1px solid rgba(240, 185, 60, 0.22);
+  border-radius: 4px;
+  padding: 1.5rem 1.4rem;
+  transition: background 0.25s, border-color 0.25s, transform 0.25s;
+}
+.int:hover {
+  background: rgba(255, 255, 255, 0.08);
+  border-color: rgba(240, 185, 60, 0.5);
+  transform: translateY(-3px);
+}
+.int svg { width: 30px; height: 30px; stroke: var(--gold-lit); fill: none; stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; margin-bottom: 0.9rem; }
+.int .kicker {
+  display: block;
+  font-size: 0.66rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  font-weight: 700;
+  color: rgba(240, 185, 60, 0.75);
+  margin-bottom: 0.3rem;
+}
+.int h3 {
+  font-family: var(--serif);
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: #fff;
+  margin-bottom: 0.6rem;
+}
+.int p { font-size: 0.92rem; line-height: 1.62; color: rgba(251, 247, 240, 0.74); }
+
+.thread {
+  border-top: 1px solid rgba(240, 185, 60, 0.28);
+  padding-top: 2.2rem;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.1fr);
+  gap: clamp(1.5rem, 5vw, 3.5rem);
+  align-items: start;
+}
+.thread h3 {
+  font-family: var(--serif);
+  font-size: clamp(1.35rem, 3vw, 1.85rem);
+  font-weight: 600;
+  line-height: 1.25;
+  color: var(--gold-lit);
+}
+.thread p { color: rgba(251, 247, 240, 0.82); }
+.thread p + p { margin-top: 1rem; }
+
 footer {
   background: var(--navy-deep);
   color: rgba(251, 247, 240, 0.5);
@@ -322,6 +390,52 @@ footer .wrap { display: flex; justify-content: space-between; gap: 1rem; flex-wr
         <h3>Point-of-care resources &amp; collection strategy</h3>
         <p>Evaluating the tertiary and point-of-care tools pharmacy students will carry into practice, and building collections that hold up after graduation.</p>
       </article>
+    </div>
+  </div>
+</section>
+
+<section class="dark" id="interests">
+  <div class="wrap">
+    <p class="section-label">The Whole Person</p>
+    <h2>Four interests, one way of thinking.</h2>
+    <p class="intro">People are usually surprised that these belong to the same person. They shouldn&rsquo;t be. Every one of them is about the same thing: build a structure sound enough that you can improvise inside it.</p>
+
+    <div class="int-grid">
+      <article class="int">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="5" r="2.1"/><circle cx="5" cy="17" r="2.1"/><circle cx="19" cy="17" r="2.1"/><path d="M10.6 6.8 6.4 15.2M13.4 6.8l4.2 8.4M7.1 17h9.8"/></svg>
+        <span class="kicker">The craft at work</span>
+        <h3>Knowledge management in Obsidian</h3>
+        <p>This is the thing Mike is genuinely expert at. A linked, plain-text vault built over years &mdash; notes that connect, survive software changes, and answer a question he first asked in 2019. He teaches it, tunes it, and will happily show you the graph.</p>
+      </article>
+
+      <article class="int">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 15.5h18v3.5a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1z"/><path d="M5.5 15.5 7 7.2a1 1 0 0 1 1-.8h8a1 1 0 0 1 1 .8l1.5 8.3"/><path d="M8.2 10.6h7.6"/></svg>
+        <span class="kicker">The craft at home</span>
+        <h3>Woodworking</h3>
+        <p>Joinery is knowledge management you can hold. Measure twice, plan the whole piece before the first cut, and accept that the strongest part of the work is the part nobody sees.</p>
+      </article>
+
+      <article class="int">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 21V3.6"/><path d="M5 4.4h14v9H5z"/><path d="M12 4.4v9M5 8.9h14"/></svg>
+        <span class="kicker">Sunday mornings</span>
+        <h3>Formula 1</h3>
+        <p>A sport decided by information: tire data, weather models, and a strategy call made in four seconds with incomplete evidence. Which, if you teach drug information, sounds awfully familiar.</p>
+      </article>
+
+      <article class="int">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="6.5" cy="17.5" r="2.8"/><circle cx="17" cy="15" r="2.8"/><path d="M9.3 17.5V7.1l10.5-2.6V15"/><path d="M9.3 9.6l10.5-2.6"/></svg>
+        <span class="kicker">On the turntable</span>
+        <h3>Jazz</h3>
+        <p>The clearest argument he knows for the whole philosophy: you learn the changes cold so that you are free to leave them. Structure is not the opposite of improvisation &mdash; it is what makes improvisation possible.</p>
+      </article>
+    </div>
+
+    <div class="thread">
+      <h3>You do not have to pick one.</h3>
+      <div>
+        <p>The message Mike most wants students to take away has very little to do with databases. It is that a career and a life are not a zero-sum trade. You can be the person who knows the literature cold <em>and</em> the person with sawdust on their sleeves, who knows the pit-stop delta, who has opinions about Coltrane.</p>
+        <p>The interests are not distractions from the work. They are where the instincts come from &mdash; patience, structure, attention, and the confidence to improvise once you actually know the material.</p>
+      </div>
     </div>
   </div>
 </section>
