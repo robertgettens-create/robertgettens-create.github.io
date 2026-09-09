@@ -197,6 +197,43 @@ h2 {
 }
 .factlist .v { color: var(--ink); }
 
+/* ---------- Research interests ---------- */
+.band {
+  background: var(--paper);
+  border-top: 1px solid var(--rule);
+  border-bottom: 1px solid var(--rule);
+}
+.intro { max-width: 60ch; margin-bottom: 2.5rem; color: var(--ink-soft); }
+.ri-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 1.6rem;
+}
+.ri {
+  position: relative;
+  padding: 1.4rem 0 0.2rem;
+  border-top: 3px solid var(--navy);
+}
+.ri:nth-child(2n) { border-top-color: var(--gold); }
+.ri .num {
+  font-family: var(--serif);
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  color: var(--gold);
+  display: block;
+  margin-bottom: 0.5rem;
+}
+.ri h3 {
+  font-family: var(--serif);
+  font-size: 1.22rem;
+  font-weight: 600;
+  color: var(--navy);
+  line-height: 1.25;
+  margin-bottom: 0.6rem;
+}
+.ri p { font-size: 0.95rem; color: var(--ink-soft); }
+
 footer {
   background: var(--navy-deep);
   color: rgba(251, 247, 240, 0.5);
@@ -219,6 +256,7 @@ footer .wrap { display: flex; justify-content: space-between; gap: 1rem; flex-wr
     <div class="mark">Mike Mannheim<span> &middot; </span>Western New England University</div>
     <nav class="nav">
       <a href="#about">About</a>
+      <a href="#research">Research</a>
       <a href="#interests">Interests</a>
       <a href="#contact">Contact</a>
     </nav>
@@ -254,6 +292,37 @@ footer .wrap { display: flex; justify-content: space-between; gap: 1rem; flex-wr
         <li><span class="k">Off hours</span><span class="v">Woodworking, Formula 1, jazz</span></li>
       </ul>
     </aside>
+  </div>
+</section>
+
+<section class="band" id="research">
+  <div class="wrap">
+    <p class="section-label">Research &amp; Practice Interests</p>
+    <h2>What I work on</h2>
+    <p class="intro">Four threads that keep running into each other: how student pharmacists learn to evaluate evidence, and how anyone keeps what they have learned findable ten years later.</p>
+
+    <div class="ri-grid">
+      <article class="ri">
+        <span class="num">01</span>
+        <h3>Drug information &amp; evidence appraisal</h3>
+        <p>How student pharmacists move from a clinical question to a defensible answer &mdash; search strategy, source hierarchy, and the judgment calls that live in between.</p>
+      </article>
+      <article class="ri">
+        <span class="num">02</span>
+        <h3>Personal knowledge management</h3>
+        <p>Linked, plain-text note systems as a working method for practitioners: capturing what you read, connecting it, and being able to retrieve it under pressure.</p>
+      </article>
+      <article class="ri">
+        <span class="num">03</span>
+        <h3>Information literacy in the professional curriculum</h3>
+        <p>Embedding librarian instruction where it actually lands &mdash; inside pharmacy coursework, tied to real assignments, rather than as a one-off orientation session.</p>
+      </article>
+      <article class="ri">
+        <span class="num">04</span>
+        <h3>Point-of-care resources &amp; collection strategy</h3>
+        <p>Evaluating the tertiary and point-of-care tools pharmacy students will carry into practice, and building collections that hold up after graduation.</p>
+      </article>
+    </div>
   </div>
 </section>
 
